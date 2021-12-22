@@ -1,0 +1,32 @@
+<idea-plugin>
+    <id>org.example.Plugin</id>
+    <name>Islam Raihan</name>
+    <vendor email="1820557@brunel.ac.uk" url="brunel.ac.uk"></vendor>
+    <depends>com.intellij.modules.java</depends>
+
+    <description> This plugin will be used to create a file within a project folder </description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="145.0"/>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.com.ca.ipv.plugins.intellij.modules.lang</depends>
+    -->
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+    <actions>
+        <group id="genClassProject" text="Generate class" popup="true">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+            <action id="classGenerator"
+                    class="Actions.ClassGenAction"
+                    text="Class generator"
+                    description="UI for generating class.">
+            </action>
+        </group>
+    </actions>
+</idea-plugin>
