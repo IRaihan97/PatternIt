@@ -5,6 +5,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
 import javax.lang.model.element.Modifier;
+import java.util.ArrayList;
 
 public class SampleTemplate {
     private static String className;
@@ -48,17 +49,23 @@ public class SampleTemplate {
 
     public TypeSpec generateJavaClass() {
 
-        TypeSpec newClass = TypeSpec
+        //TestingList
+        ArrayList<MethodSpec> methods = new ArrayList<MethodSpec>();
+        methods.add(generateConstructor());
+        methods.add(generateMethod());
+
+        TypeSpec.Builder newClass = TypeSpec
                 .classBuilder(className)
                 .addField(generateFields(fieldName))
-                .addField(generateFields(fieldName + "2"))
-                .addMethod(generateConstructor())
-                .addMethod(generateMethod())
-                .build();
+                .addField(generateFields(fieldName + "2"));
+        methods.forEach((method) -> newClass.addMethod(method));
+
+        TypeSpec builtClass = newClass.build();
+
 
         
 
-        return newClass;
+        return builtClass;
     }
 }
 
