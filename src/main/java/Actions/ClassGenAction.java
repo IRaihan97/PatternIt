@@ -4,6 +4,9 @@ import GUI.GenDialogWrapper;
 import JavaPoetTemplates.BaseClass;
 import JavaPoetTemplates.Fields;
 import JavaPoetTemplates.Methods;
+import JavaPoetTemplates.Patterns.Composite.Component;
+import JavaPoetTemplates.Patterns.Composite.Composite;
+import JavaPoetTemplates.Patterns.Composite.Leaf;
 import JavaPoetTemplates.Patterns.Singleton;
 import JavaPoetTemplates.SampleTemplate;
 import SampleClasses.GeneratedClass;
@@ -39,7 +42,8 @@ public class ClassGenAction extends AnAction {
         } else if (selectedElement instanceof PsiClass) {
             PsiFile psiFile = selectedElement.getContainingFile();
             selectedDir = psiFile.getContainingDirectory();
-        } else {
+        }
+        else {
             e.getPresentation().setEnabledAndVisible(false);
         }
 
@@ -93,10 +97,10 @@ public class ClassGenAction extends AnAction {
         modifiers1.add(Modifier.STATIC);
         Fields field3 = new Fields(String.class, "TakeYourCall", modifiers3);
 
-        ArrayList<FieldSpec> fields = new ArrayList<>();
-        fields.add(field1.getField());
-        fields.add(field2.getField());
-        fields.add(field3.getField());
+        ArrayList<Fields> fields = new ArrayList<>();
+        fields.add(field1);
+        fields.add(field2);
+        fields.add(field3);
 
         ArrayList<Modifier> methodsMod1 = new ArrayList<>();
         methodsMod1.add(Modifier.PUBLIC);
@@ -167,14 +171,7 @@ public class ClassGenAction extends AnAction {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"EagerAndExtraImplementation", "singleObj", "Eager", "Singleton", fields, methods);
-        file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
-        try {
-            file.writeTo(outPut);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"LazyAndExtraImplementation", "singleObj", "Lazy", "Singleton", fields, methods);
+        singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"withLazyAndExtra", "singleObj", "Lazy", "Singleton", fields, methods);
         file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
         try {
             file.writeTo(outPut);
@@ -198,9 +195,41 @@ public class ClassGenAction extends AnAction {
             e.printStackTrace();
         }
 
+        ArrayList<MethodSpec> abstracMethods = new ArrayList<>();;
+        abstracMethods.add(MethodSpec.methodBuilder("abstractExample1")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(void.class)
+                .build()
+        );
+        abstracMethods.add(MethodSpec.methodBuilder("abstractExample2")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(void.class)
+                .build()
+        );
+        String componentName = "Component";
+        String packageName = "Composite";
+        Component interfaceFile = new Component("Component", abstracMethods);
+        file = JavaFile.builder(packageName, interfaceFile.getInterfaceGen()).build();
+        try {
+            file.writeTo(outPut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Composite compositeObject = new Composite(interfaceFile, GeneratedClass.INSTANCE.getClassName()+"Composite", packageName);
+        file = JavaFile.builder(packageName, compositeObject.getCompositeGen()).build();
+        try {
+            file.writeTo(outPut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-
-
+        Leaf leafObj = new Leaf(interfaceFile, GeneratedClass.INSTANCE.getClassName()+"Leaf",packageName, fields, methods);
+        file = JavaFile.builder(packageName, leafObj.getLeafGen()).build();
+        try {
+            file.writeTo(outPut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         project.getBaseDir().refresh(false,true);
 
     }

@@ -1,5 +1,6 @@
 package JavaPoetTemplates.Patterns;
 
+import JavaPoetTemplates.Fields;
 import com.squareup.javapoet.*;
 
 import javax.lang.model.element.Modifier;
@@ -11,13 +12,13 @@ public class Singleton {
     private String singletonType;
     ClassName classType;
     private String packageName;
-    private ArrayList<FieldSpec> fields;
+    private ArrayList<Fields> fields;
     private ArrayList<MethodSpec> methods;
     private TypeSpec classGen;
 
     public Singleton(String className, String objectName,
                      String singletonType, String packageName,
-                     ArrayList<FieldSpec> fields, ArrayList<MethodSpec> methods) {
+                     ArrayList<Fields> fields, ArrayList<MethodSpec> methods) {
         this.className = className;
         this.objectName = objectName;
         this.singletonType = singletonType;
@@ -52,6 +53,37 @@ public class Singleton {
     }
 
     public Singleton(){}
+
+    private TypeSpec generateSingleton(){
+        FieldSpec.Builder singletonObj = FieldSpec
+                .builder(classType, objectName, Modifier.PRIVATE, Modifier.STATIC);
+        if(singletonType.matches("Eager")){
+            singletonObj.initializer("new $T()", classType);
+        }
+        MethodSpec privConstructor = MethodSpec
+                .methodBuilder(className)
+                .addModifiers(Modifier.PRIVATE)
+                .build();
+        MethodSpec.Builder getInstance = MethodSpec.methodBuilder("getInstance");
+        if(singletonType.matches("Lazy")){
+            lazySingleton(getInstance);
+        }
+        else if(singletonType.matches("Sync")){
+            syncSingleton(getInstance);
+        }
+        else{
+            eagerSingleton(getInstance);
+        }
+        TypeSpec.Builder classBuilder = TypeSpec
+                .classBuilder(className)
+                .addField(singletonObj.build())
+                .addMethod(privConstructor)
+                .addMethod(getInstance.build());
+
+        addExtraFieldsandMethods(classBuilder);
+
+        return classBuilder.build();
+    }
 
     private void lazySingleton(MethodSpec.Builder getInstance)
     {
@@ -92,67 +124,24 @@ public class Singleton {
                 .addModifiers(Modifier.PUBLIC)
                 .addComment("ADD CODE HERE")
                 .build();
-        CodeBlock codeBlock = CodeBlock.builder()
-                .addStatement("INSTANCE")
-                .build();
         TypeSpec.Builder enumClass = TypeSpec
                 .enumBuilder(className)
                 .addModifiers(Modifier.PUBLIC)
                 .addEnumConstant("INSTANCE")
-                //.addStaticBlock(codeBlock)
                 .addMethod(method);
         addExtraFieldsandMethods(enumClass);
         return enumClass.build();
     }
 
-    private TypeSpec generateSingleton(){
-        FieldSpec.Builder singletonObj = FieldSpec
-                .builder(classType, objectName, Modifier.PRIVATE, Modifier.STATIC);
-        if(singletonType.matches("Eager")){
-            singletonObj.initializer("new $T()", classType);
-        }
-        MethodSpec privConstructor = MethodSpec
-                .methodBuilder(className)
-                .addModifiers(Modifier.PRIVATE)
-                .build();
-        MethodSpec.Builder getInstance = MethodSpec.methodBuilder("getInstance");
-        if(singletonType.matches("Lazy")){
-            lazySingleton(getInstance);
-        }
-        else if(singletonType.matches("Sync")){
-            syncSingleton(getInstance);
-        }
-        else{
-            eagerSingleton(getInstance);
-        }
-        TypeSpec.Builder classBuilder = TypeSpec
-                .classBuilder(className)
-                .addField(singletonObj.build())
-                .addMethod(privConstructor)
-                .addMethod(getInstance.build());
-
-        addExtraFieldsandMethods(classBuilder);
-
-        return classBuilder.build();
-    }
 
     private void addExtraFieldsandMethods(TypeSpec.Builder classBuilder){
         if(fields != null){
-            fields.forEach((field) -> classBuilder.addField(field));
+            fields.forEach((field) -> classBuilder.addField(field.getField()));
         }
         if(methods != null){
             methods.forEach((method) -> classBuilder.addMethod(method));
         }
     }
-
-//    private void generateSingleton(){
-//        switch (singletonType){
-//            case "Sync":
-//            case "Enum":
-//            default:
-//                classGen = eagerSingleton();
-//        }
-//    }
 
     public TypeSpec getClassGen(){
         return classGen;
