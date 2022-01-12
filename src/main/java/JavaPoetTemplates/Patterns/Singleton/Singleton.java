@@ -1,4 +1,4 @@
-package JavaPoetTemplates.Patterns;
+package JavaPoetTemplates.Patterns.Singleton;
 
 import JavaPoetTemplates.Fields;
 import com.squareup.javapoet.*;

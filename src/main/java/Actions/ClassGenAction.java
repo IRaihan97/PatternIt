@@ -1,14 +1,13 @@
 package Actions;
 
 import GUI.GenDialogWrapper;
-import JavaPoetTemplates.BaseClass;
 import JavaPoetTemplates.Fields;
 import JavaPoetTemplates.Methods;
 import JavaPoetTemplates.Patterns.Composite.Component;
 import JavaPoetTemplates.Patterns.Composite.Composite;
 import JavaPoetTemplates.Patterns.Composite.Leaf;
-import JavaPoetTemplates.Patterns.Singleton;
-import JavaPoetTemplates.SampleTemplate;
+import JavaPoetTemplates.Patterns.Singleton.Singleton;
+import JavaPoetTemplates.Patterns.Template.Abstract;
 import SampleClasses.GeneratedClass;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -16,16 +15,13 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
-import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeSpec;
-import org.apache.tools.ant.taskdefs.Java;
+import org.bouncycastle.math.raw.Mod;
 
 import javax.lang.model.element.Modifier;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -69,19 +65,7 @@ public class ClassGenAction extends AnAction {
         String selectedPath = selectedDir.toString();
         String outputPath = selectedPath.toString();
         File outPut = new File(outputPath.substring(13));
-//        SampleTemplate generate = new SampleTemplate("newClass", "newMethod", "newField");
-//        TypeSpec newClass = generate.generateJavaClass();
-//        JavaFile javaFile = JavaFile.builder("GeneratedClass", newClass)
-//                .build();
-//
-//        try {
-//            javaFile.writeTo(outPut);
-//            javaFile.writeTo(System.out);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//
+
         ArrayList<Modifier> modifiers1 = new ArrayList<>();
         modifiers1.add(Modifier.PRIVATE);
         modifiers1.add(Modifier.STATIC);
@@ -142,27 +126,6 @@ public class ClassGenAction extends AnAction {
 
         ArrayList<MethodSpec> methods = new ArrayList<>();
         methods.add(method1.getMethod());
-//        TypeSpec generateClass1 = new BaseClass(GeneratedClass.INSTANCE.getClassName(), fields, methods).getClassGen();
-//
-//        JavaFile newFile = JavaFile.builder("package1", generateClass1).build();
-//        JavaFile newFile2 = JavaFile.builder("package2", generateClass1).build();
-//        JavaFile newFile3 = JavaFile.builder("package3", generateClass1).build();
-//
-//        ArrayList<JavaFile> files = new ArrayList<>();
-//        files.add(newFile);
-//        files.add(newFile2);
-//        files.add(newFile3);
-//
-//        files.forEach((file) -> {
-//            try {
-//                file.writeTo(outPut);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        });
-//
-//        project.getBaseDir().refresh(false,true);
-
 
         Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName(), "singleObj", "Eager", "Singleton");
         JavaFile file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
@@ -230,6 +193,27 @@ public class ClassGenAction extends AnAction {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        ArrayList<Methods> abstractMethods = new ArrayList<>();
+        Methods absMethod1 = new Methods("Example1", void.class, Modifier.PUBLIC);
+        Methods absMethod2 = new Methods("Example2", void.class, Modifier.PUBLIC);
+        Methods absMethod3 = new Methods("Example3", void.class, Modifier.PUBLIC);
+        Methods absMethod4 = new Methods("Example4", void.class, Modifier.PUBLIC);
+        abstractMethods.add(absMethod1);
+        abstractMethods.add(absMethod2);
+        abstractMethods.add(absMethod3);
+        abstractMethods.add(absMethod4);
+
+
+
+        Abstract abstractObject = new Abstract(GeneratedClass.INSTANCE.getClassName()+"Abstract","Template",fields,abstractMethods);
+        file = JavaFile.builder("Template", abstractObject.getAbsClassGen()).build();
+        try {
+            file.writeTo(outPut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         project.getBaseDir().refresh(false,true);
 
     }

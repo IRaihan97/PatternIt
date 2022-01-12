@@ -15,6 +15,7 @@ public class Methods {
     private ArrayList<Class> parameterType;
     private ArrayList<String> parameterName;
     private ArrayList<String> statements;
+    private Modifier singleModifier;
     private MethodSpec method;
 
     public Methods(String methodName, ArrayList<Modifier> methodModifiers,
@@ -30,25 +31,45 @@ public class Methods {
         this.method = generateMethod();
     }
 
+    public Methods(String methodName, Class methodType, Modifier singleModifier) {
+        this.methodName = methodName;
+        this.methodType = methodType;
+        this.singleModifier = singleModifier;
+        this.method = generateMethod();
+    }
+
     private MethodSpec generateMethod() {
         MethodSpec.Builder methodBuilder = MethodSpec
                 .methodBuilder(methodName)
                 .returns(methodType);
-        methodModifiers.forEach((modifier) -> methodBuilder.addModifiers(modifier));
+        if(singleModifier!=null){
+            methodBuilder.addModifiers(singleModifier);
+        }
+        if(methodModifiers!=null){
+            methodModifiers.forEach((modifier) -> methodBuilder.addModifiers(modifier));
+        }
         if(parameterType != null || parameterName != null){
             for(int i = 0; i < parameterType.size()-1; i++)
             {
                 methodBuilder.addParameter(parameterType.get(i), parameterName.get(i));
             }
         }
-        statements.forEach((statements) -> methodBuilder.addStatement(statements));
+        if(statements!=null){
+            statements.forEach((statements) -> methodBuilder.addStatement(statements));
+        }
 
         return methodBuilder.build();
+    }
+
+    public Class getMethodType() {
+        return methodType;
     }
 
     public MethodSpec getMethod(){
         return method;
     }
 
-
+    public String getMethodName() {
+        return methodName;
+    }
 }
