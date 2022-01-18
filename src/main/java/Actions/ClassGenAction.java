@@ -1,6 +1,7 @@
 package Actions;
 
-import GUI.GenDialogWrapper;
+import GUI.BasicGenDialogWrapper;
+import GUI.SingletonGenDialogWrapper;
 import JavaPoetTemplates.Fields;
 import JavaPoetTemplates.Methods;
 import JavaPoetTemplates.Patterns.Composite.Component;
@@ -8,6 +9,7 @@ import JavaPoetTemplates.Patterns.Composite.Composite;
 import JavaPoetTemplates.Patterns.Composite.Leaf;
 import JavaPoetTemplates.Patterns.Singleton.Singleton;
 import JavaPoetTemplates.Patterns.Template.Abstract;
+import JavaPoetTemplates.Patterns.Template.Concrete;
 import SampleClasses.GeneratedClass;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -17,7 +19,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
-import org.bouncycastle.math.raw.Mod;
 
 import javax.lang.model.element.Modifier;
 import java.io.File;
@@ -43,28 +44,18 @@ public class ClassGenAction extends AnAction {
             e.getPresentation().setEnabledAndVisible(false);
         }
 
+
         project = e.getData(PlatformDataKeys.PROJECT);
     }
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
-        GenDialogWrapper dialogWrapper = new GenDialogWrapper(anActionEvent.getProject());
-        dialogWrapper.show();
-//        if (dialogWrapper.isOK()) {
-//            String template;
-//            if (GeneratedClass.INSTANCE.isHasPsvm()) {
-//                template = "class_template.java";
-//            } else {
-//                template = "main_template.java";
-//            }
-//
-//            JavaDirectoryService.getInstance().createClass(selectedDir,
-//                    GeneratedClass.INSTANCE.getClassName(), template, true);
-//        }
-
         String selectedPath = selectedDir.toString();
         String outputPath = selectedPath.toString();
         File outPut = new File(outputPath.substring(13));
+        JavaFile file = null;
+        String action = anActionEvent.getPresentation().getText();
+        System.out.println(action);
 
         ArrayList<Modifier> modifiers1 = new ArrayList<>();
         modifiers1.add(Modifier.PRIVATE);
@@ -117,6 +108,16 @@ public class ClassGenAction extends AnAction {
         parameterNames1.add("charParameter");
         parameterNames1.add("boolParameter");
 
+        ArrayList<Methods> abstractMethods = new ArrayList<>();
+        Methods absMethod1 = new Methods("Example1", void.class, Modifier.PUBLIC);
+        Methods absMethod2 = new Methods("Example2", void.class, Modifier.PUBLIC);
+        Methods absMethod3 = new Methods("Example3", void.class, Modifier.PUBLIC);
+        Methods absMethod4 = new Methods("Example4", void.class, Modifier.PUBLIC);
+        abstractMethods.add(absMethod1);
+        abstractMethods.add(absMethod2);
+        abstractMethods.add(absMethod3);
+        abstractMethods.add(absMethod4);
+
 
         Methods method2 = new Methods("SimpleMethod2",
                 methodsMod2, int.class, parameterTypes1, parameterNames1, statements1);
@@ -126,37 +127,6 @@ public class ClassGenAction extends AnAction {
 
         ArrayList<MethodSpec> methods = new ArrayList<>();
         methods.add(method1.getMethod());
-
-        Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName(), "singleObj", "Eager", "Singleton");
-        JavaFile file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
-        try {
-            file.writeTo(outPut);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"withLazyAndExtra", "singleObj", "Lazy", "Singleton", fields, methods);
-        file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
-        try {
-            file.writeTo(outPut);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"SyncImplementation", "singleObj", "Sync", "Singleton");
-        file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
-        try {
-            file.writeTo(outPut);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"EnumImplementation", "singleObj", "Enum", "Singleton");
-        file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
-        try {
-            file.writeTo(outPut);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         ArrayList<MethodSpec> abstracMethods = new ArrayList<>();;
         abstracMethods.add(MethodSpec.methodBuilder("abstractExample1")
@@ -169,52 +139,160 @@ public class ClassGenAction extends AnAction {
                 .returns(void.class)
                 .build()
         );
-        String componentName = "Component";
-        String packageName = "Composite";
-        Component interfaceFile = new Component("Component", abstracMethods);
-        file = JavaFile.builder(packageName, interfaceFile.getInterfaceGen()).build();
-        try {
-            file.writeTo(outPut);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+//        BasicGenDialogWrapper dialogWrapper = new BasicGenDialogWrapper(anActionEvent.getProject());
+//        dialogWrapper.show();
+
+        if(action.equals("Eager")) {
+            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
+            singletonUI.show();
+            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName(), "singleObj", "Eager", "Singleton");
+            file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
+            try {
+                file.writeTo(outPut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        Composite compositeObject = new Composite(interfaceFile, GeneratedClass.INSTANCE.getClassName()+"Composite", packageName);
-        file = JavaFile.builder(packageName, compositeObject.getCompositeGen()).build();
-        try {
-            file.writeTo(outPut);
-        } catch (IOException e) {
-            e.printStackTrace();
+        else if(action.equals("Lazy")) {
+            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
+            singletonUI.show();
+            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"withLazyAndExtra", "singleObj", "Lazy", "Singleton", fields, methods);
+            file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
+            try {
+                file.writeTo(outPut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        Leaf leafObj = new Leaf(interfaceFile, GeneratedClass.INSTANCE.getClassName()+"Leaf",packageName, fields, methods);
-        file = JavaFile.builder(packageName, leafObj.getLeafGen()).build();
-        try {
-            file.writeTo(outPut);
-        } catch (IOException e) {
-            e.printStackTrace();
+        else if(action.equals("ThreadSafe")) {
+            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
+            singletonUI.show();
+            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"SyncImplementation", "singleObj", "Sync", "Singleton");
+            file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
+            try {
+                file.writeTo(outPut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        ArrayList<Methods> abstractMethods = new ArrayList<>();
-        Methods absMethod1 = new Methods("Example1", void.class, Modifier.PUBLIC);
-        Methods absMethod2 = new Methods("Example2", void.class, Modifier.PUBLIC);
-        Methods absMethod3 = new Methods("Example3", void.class, Modifier.PUBLIC);
-        Methods absMethod4 = new Methods("Example4", void.class, Modifier.PUBLIC);
-        abstractMethods.add(absMethod1);
-        abstractMethods.add(absMethod2);
-        abstractMethods.add(absMethod3);
-        abstractMethods.add(absMethod4);
+        else if(action.equals("Enum")){
+            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
+            singletonUI.show();
+            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"EnumImplementation", "singleObj", "Enum", "Singleton");
+            file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
+            try {
+                file.writeTo(outPut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-
-
-        Abstract abstractObject = new Abstract(GeneratedClass.INSTANCE.getClassName()+"Abstract","Template",fields,abstractMethods);
-        file = JavaFile.builder("Template", abstractObject.getAbsClassGen()).build();
-        try {
-            file.writeTo(outPut);
-        } catch (IOException e) {
-            e.printStackTrace();
+        else if(action.equals("Composite")) {
+            String packageName = "Composite";
+            Component interfaceFile = new Component("Component", abstracMethods);
+            file = JavaFile.builder(packageName, interfaceFile.getInterfaceGen()).build();
+            try {
+                file.writeTo(outPut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Composite compositeObject = new Composite(interfaceFile, GeneratedClass.INSTANCE.getClassName()+"Composite", packageName);
+            file = JavaFile.builder(packageName, compositeObject.getCompositeGen()).build();
+            try {
+                file.writeTo(outPut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Leaf leafObj = new Leaf(interfaceFile, GeneratedClass.INSTANCE.getClassName()+"Leaf",packageName, fields, methods);
+            file = JavaFile.builder(packageName, leafObj.getLeafGen()).build();
+            try {
+                file.writeTo(outPut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(action.equals("Template")){
+            Abstract abstractObject = new Abstract(GeneratedClass.INSTANCE.getClassName()+"Abstract","Template",fields,abstractMethods);
+            file = JavaFile.builder("Template", abstractObject.getAbsClassGen()).build();
+            try {
+                file.writeTo(outPut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Concrete concreteObject = new Concrete(GeneratedClass.INSTANCE.getClassName()+"Concrete", abstractObject);
+            file = JavaFile.builder("Template", concreteObject.getConcreteGen()).build();
+            try {
+                file.writeTo(outPut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         project.getBaseDir().refresh(false,true);
+
+
+//        if (dialogWrapper.isOK()) {
+//            String template;
+//            if (GeneratedClass.INSTANCE.isHasPsvm()) {
+//                template = "class_template.java";
+//            } else {
+//                template = "main_template.java";
+//            }
+//
+//            JavaDirectoryService.getInstance().createClass(selectedDir,
+//                    GeneratedClass.INSTANCE.getClassName(), template, true);
+//        }
+
+
+//
+
+
+//
+//        try {
+//            file.writeTo(outPut);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        try {
+//            file.writeTo(outPut);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+
+//        try {
+//            file.writeTo(outPut);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+
+
+//        try {
+//            file.writeTo(outPut);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            file.writeTo(outPut);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+
+//
+
+//
+//
+//
+
+//
 
     }
 }

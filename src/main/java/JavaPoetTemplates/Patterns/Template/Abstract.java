@@ -49,6 +49,17 @@ public class Abstract {
 
     }
 
+    public ClassName getComponentType() {
+        return componentType;
+    }
+
+    public ArrayList<Fields> getFieldsToAdd() {
+        return fieldsToAdd;
+    }
+
+    public ArrayList<Methods> getMethodsToAdd() {
+        return methodsToAdd;
+    }
 
     public TypeSpec getAbsClassGen() {
         return absClassGen;

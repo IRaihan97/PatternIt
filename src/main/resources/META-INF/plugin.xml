@@ -20,11 +20,43 @@
         <!-- Add your extensions here -->
     </extensions>
     <actions>
-        <group id="genClassProject" text="Generate class" popup="true">
+        <group id="genClassProject" text="PatternIt" popup="true">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
-            <action id="classGenerator"
+            <group id="singleTon" text="Singleton" popup="true">
+                <add-to-group group-id="CommanderPopupMenu" anchor="first"/>
+                <action id="eagerGenerator"
+                        class="Actions.ClassGenAction"
+                        text="Eager"
+                        description="UI for generating class.">
+                </action>
+                <action id="lazyGenerator"
+                        class="Actions.ClassGenAction"
+                        text="Lazy"
+                        description="UI for generating class.">
+                </action>
+                <action id="threadSafeGenerator"
+                        class="Actions.ClassGenAction"
+                        text="ThreadSafe"
+                        description="UI for generating class.">
+
+                </action>
+                <action id="enumGenerator"
+                        class="Actions.ClassGenAction"
+                        text="Enum"
+                        description="UI for generating class.">
+
+                </action>
+            </group>
+            <separator></separator>
+            <action id="compositeGenerator"
                     class="Actions.ClassGenAction"
-                    text="Class generator"
+                    text="Composite"
+                    description="UI for generating class.">
+            </action>
+            <separator></separator>
+            <action id="Generator"
+                    class="Actions.ClassGenAction"
+                    text="Template"
                     description="UI for generating class.">
             </action>
         </group>
