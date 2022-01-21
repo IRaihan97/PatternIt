@@ -139,9 +139,11 @@ public class ClassGenAction extends AnAction {
                 .returns(void.class)
                 .build()
         );
-
+//
 //        BasicGenDialogWrapper dialogWrapper = new BasicGenDialogWrapper(anActionEvent.getProject());
 //        dialogWrapper.show();
+
+
 
         if(action.equals("Eager")) {
             SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
@@ -155,8 +157,8 @@ public class ClassGenAction extends AnAction {
             }
         }
         else if(action.equals("Lazy")) {
-            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
-            singletonUI.show();
+//            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
+//            singletonUI.show();
             Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"withLazyAndExtra", "singleObj", "Lazy", "Singleton", fields, methods);
             file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
             try {
@@ -167,8 +169,8 @@ public class ClassGenAction extends AnAction {
         }
 
         else if(action.equals("ThreadSafe")) {
-            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
-            singletonUI.show();
+//            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
+//            singletonUI.show();
             Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"SyncImplementation", "singleObj", "Sync", "Singleton");
             file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
             try {
@@ -179,8 +181,8 @@ public class ClassGenAction extends AnAction {
         }
 
         else if(action.equals("Enum")){
-            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
-            singletonUI.show();
+//            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
+//            singletonUI.show();
             Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"EnumImplementation", "singleObj", "Enum", "Singleton");
             file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
             try {
