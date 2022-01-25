@@ -1,6 +1,6 @@
 package GUI;
 
-import SampleClasses.GeneratedClass;
+import InputHolders.GeneratedClass;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

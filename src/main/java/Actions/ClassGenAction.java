@@ -1,7 +1,8 @@
 package Actions;
 
-import GUI.BasicGenDialogWrapper;
+import GUI.SingletonForm;
 import GUI.SingletonGenDialogWrapper;
+import InputHolders.SingletonClass;
 import JavaPoetTemplates.Fields;
 import JavaPoetTemplates.Methods;
 import JavaPoetTemplates.Patterns.Composite.Component;
@@ -10,7 +11,7 @@ import JavaPoetTemplates.Patterns.Composite.Leaf;
 import JavaPoetTemplates.Patterns.Singleton.Singleton;
 import JavaPoetTemplates.Patterns.Template.Abstract;
 import JavaPoetTemplates.Patterns.Template.Concrete;
-import SampleClasses.GeneratedClass;
+import InputHolders.GeneratedClass;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -148,7 +149,7 @@ public class ClassGenAction extends AnAction {
         if(action.equals("Eager")) {
             SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
             singletonUI.show();
-            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName(), "singleObj", "Eager", "Singleton");
+            Singleton singletonClass = new Singleton(SingletonClass.INSTANCE.getClassName(), "Eager", "Singleton");
             file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
             try {
                 file.writeTo(outPut);
@@ -159,7 +160,7 @@ public class ClassGenAction extends AnAction {
         else if(action.equals("Lazy")) {
 //            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
 //            singletonUI.show();
-            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"withLazyAndExtra", "singleObj", "Lazy", "Singleton", fields, methods);
+            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"withLazyAndExtra", "Lazy", "Singleton", fields, methods);
             file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
             try {
                 file.writeTo(outPut);
@@ -171,7 +172,7 @@ public class ClassGenAction extends AnAction {
         else if(action.equals("ThreadSafe")) {
 //            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
 //            singletonUI.show();
-            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"SyncImplementation", "singleObj", "Sync", "Singleton");
+            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"SyncImplementation", "Sync", "Singleton");
             file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
             try {
                 file.writeTo(outPut);
@@ -183,7 +184,7 @@ public class ClassGenAction extends AnAction {
         else if(action.equals("Enum")){
 //            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
 //            singletonUI.show();
-            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"EnumImplementation", "singleObj", "Enum", "Singleton");
+            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"EnumImplementation", "Enum", "Singleton");
             file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
             try {
                 file.writeTo(outPut);

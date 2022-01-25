@@ -1,4 +1,4 @@
-package SampleClasses;
+package InputHolders;
 
 public class GeneratedClass {
     public static final GeneratedClass INSTANCE = new GeneratedClass();

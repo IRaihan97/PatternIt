@@ -1,8 +1,13 @@
 package GUI;
 
+import InputHolders.FieldsClass;
+import InputHolders.GeneratedClass;
+import InputHolders.SingletonClass;
 import com.intellij.openapi.ui.ComboBox;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +38,57 @@ public class SingletonForm {
     private ArrayList<JPanel> addMethodPanel;
     private int currentPanelRow = 0;
     private JLabel test;
+    private GridBagConstraints con = new GridBagConstraints();
 
+    public SingletonForm(){
+        classNameInput.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SingletonClass.INSTANCE.setClassName(classNameInput.getText());
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                SingletonClass.INSTANCE.setClassName(classNameInput.getText());
+
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                SingletonClass.INSTANCE.setClassName(classNameInput.getText());
+            }
+        });
+        fieldNameInput.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
+                System.out.println(FieldsClass.INSTANCE.getFieldName());
+                System.out.println(fieldDataTypeBox.getSelectedItem());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
+                System.out.println(FieldsClass.INSTANCE.getFieldName());
+                System.out.println(fieldDataTypeBox.getSelectedItem());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
+                System.out.println(FieldsClass.INSTANCE.getFieldName());
+                System.out.println(fieldDataTypeBox.getSelectedItem());
+            }
+        });
+
+//        fieldDataTypeBox.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                //if(fieldDataTypeBox.getSelectedItem().toString().matches("char")){
+//                    System.out.println(fieldDataTypeBox.getSelectedItem().toString());
+//                //}
+//            }
+//        });
+
+    }
     private void addFieldRow(){
 
 
@@ -42,9 +97,15 @@ public class SingletonForm {
     private void generateMethodRow(){
     }
 
+    private void getAllInputs(){
 
+        FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
+        System.out.println(FieldsClass.INSTANCE.getFieldName());
+        System.out.println(fieldDataTypeBox.getSelectedIndex());
+    }
 
     public JComponent getContent() {
+        con.gridy=1;
         //mainPanel.setPreferredSize(new Dimension(500,100));
 //        addFieldButton.addActionListener(new ActionListener() {
 //            @Override
@@ -60,15 +121,19 @@ public class SingletonForm {
 //            }
 //        });
         addFieldButton.addActionListener(e -> {
-            addFieldRow(fieldsPanel);
+            addFieldRow(fieldsPanel, con);
         });
+
         return mainPanel;
     }
 
-    public void addFieldRow(JPanel panel){
+    public void addFieldRow(JPanel panel, GridBagConstraints con){
         JPanel newPanel = new JPanel();
         newPanel.setLocation(fieldsPanel.getLocation().x, fieldsPanel.getLocation().y+100);
         System.out.println(fieldDefinerPanel.getLocation().y);
+        GridBagLayout c = new GridBagLayout();
+        con.fill = GridBagConstraints.HORIZONTAL;
+
         JLabel fieldName = new JLabel("Field Name");
         JTextField fieldNameInput = new JTextField();
         ComboBox encBox = new ComboBox();
@@ -82,8 +147,9 @@ public class SingletonForm {
         newPanel.add(encBox);
         newPanel.add(typeBox);
         newPanel.add(modBox);
-        panel.add(newPanel);
+        panel.add(newPanel, con);
         panel.revalidate();
+        con.gridy++;
     }
 
     private void createEncapsulationBox(ComboBox box){
@@ -102,8 +168,27 @@ public class SingletonForm {
         box.addItem("long");
     }
 
+    public JTextField getClassNameInput() {
+        return classNameInput;
+    }
 
+    public void setClassNameInput(JTextField classNameInput) {
+        this.classNameInput = classNameInput;
+    }
 
+    public JComboBox getFieldDataTypeBox() {
+        return fieldDataTypeBox;
+    }
 
+    public void setFieldDataTypeBox(JComboBox fieldDataTypeBox) {
+        this.fieldDataTypeBox = fieldDataTypeBox;
+    }
 
+    public JTextField getFieldNameInput() {
+        return fieldNameInput;
+    }
+
+    public void setFieldNameInput(JTextField fieldNameInput) {
+        this.fieldNameInput = fieldNameInput;
+    }
 }

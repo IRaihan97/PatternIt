@@ -1,5 +1,6 @@
 package JavaPoetTemplates.Patterns.Singleton;
 
+import InputHolders.SingletonClass;
 import JavaPoetTemplates.Fields;
 import com.squareup.javapoet.*;
 
@@ -16,16 +17,16 @@ public class Singleton {
     private ArrayList<MethodSpec> methods;
     private TypeSpec classGen;
 
-    public Singleton(String className, String objectName,
+    public Singleton(String className,
                      String singletonType, String packageName,
                      ArrayList<Fields> fields, ArrayList<MethodSpec> methods) {
-        this.className = className;
-        this.objectName = objectName;
+        this.className = SingletonClass.capitalize(className);
+        this.objectName = className.substring(0,1).toLowerCase() + className.substring(1);
         this.singletonType = singletonType;
         this.packageName = packageName;
         this.fields = fields;
         this.methods = methods;
-        classType = ClassName.get(packageName, className);
+        classType = ClassName.get(packageName, className.substring(0,1).toUpperCase() + className.substring(1));
         if(singletonType.matches("Enum")){
             classGen = enumSingleton();
         }
@@ -36,14 +37,14 @@ public class Singleton {
 
     }
 
-    public Singleton(String className, String objectName,
+    public Singleton(String className,
                      String singletonType, String packageName)
     {
-        this.className = className;
-        this.objectName = objectName;
+        this.className = SingletonClass.capitalize(className);
+        this.objectName = className.substring(0,1).toLowerCase() + className.substring(1);
         this.singletonType = singletonType;
         this.packageName = packageName;
-        classType = ClassName.get(packageName, className);
+        classType = ClassName.get(packageName, className.substring(0,1).toUpperCase() + className.substring(1));
         if(singletonType.matches("Enum")){
             classGen = enumSingleton();
         }
