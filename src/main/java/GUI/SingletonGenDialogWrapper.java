@@ -17,7 +17,6 @@ public class SingletonGenDialogWrapper extends DialogWrapper {
         super(project);
         this.singletonMode = singletonMode;
         singletonForm = new SingletonForm();
-        super.doOKAction();
         init();
 
         setTitle("Singleton Generator");
@@ -65,11 +64,5 @@ public class SingletonGenDialogWrapper extends DialogWrapper {
 
         return singletonForm.getContent();
 
-    }
-
-    @Override
-    protected void doOKAction() {
-
-        super.doOKAction();
     }
 }

@@ -1,6 +1,5 @@
 package JavaPoetTemplates;
 
-import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
@@ -9,10 +8,10 @@ import java.util.ArrayList;
 
 public class BaseClass {
     private String className;
-    private ArrayList<Fields> fields;
+    private ArrayList<FieldGen> fields;
     private ArrayList<MethodSpec> methods;
     private MethodSpec constructor;
-    public BaseClass(String className, ArrayList<Fields> fields, ArrayList<MethodSpec> methods){
+    public BaseClass(String className, ArrayList<FieldGen> fields, ArrayList<MethodSpec> methods){
         this.className = className;
         this.fields = fields;
         this.methods = methods;
@@ -24,9 +23,9 @@ public class BaseClass {
                 .methodBuilder(className)
                 .addModifiers(Modifier.PUBLIC);
         if(fields!=null) {
-            for (Fields fields : this.fields) {
-                constructor.addParameter(fields.getDerivedParameter());
-                constructor.addStatement("this.$N = $N", fields.getFieldName(), fields.getFieldName());
+            for (FieldGen fieldGen : this.fields) {
+                constructor.addParameter(fieldGen.getDerivedParameter());
+                constructor.addStatement("this.$N = $N", fieldGen.getFieldName(), fieldGen.getFieldName());
             }
         }
         return constructor.build();

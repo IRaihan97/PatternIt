@@ -1,6 +1,6 @@
 package JavaPoetTemplates.Patterns.Composite;
 
-import JavaPoetTemplates.Fields;
+import JavaPoetTemplates.FieldGen;
 import com.squareup.javapoet.*;
 
 import javax.lang.model.element.Modifier;
@@ -10,16 +10,16 @@ public class Leaf {
     private String componentName;
     private Component componentClass;
     private String leafObjName;
-    private ArrayList<Fields> fieldsToAdd;
+    private ArrayList<FieldGen> fieldGenToAdd;
     private ArrayList<MethodSpec> methodsToAdd;
     private ClassName componentType;
     private TypeSpec leafGen;
 
-    public Leaf(Component componentClass, String leafObjName, String packageName, ArrayList<Fields> fieldsToAdd, ArrayList<MethodSpec> methodsToAdd) {
+    public Leaf(Component componentClass, String leafObjName, String packageName, ArrayList<FieldGen> fieldGenToAdd, ArrayList<MethodSpec> methodsToAdd) {
         this.componentName = componentClass.getComponentName();
         this.componentClass = componentClass;
         this.leafObjName = leafObjName;
-        this.fieldsToAdd = fieldsToAdd;
+        this.fieldGenToAdd = fieldGenToAdd;
         this.methodsToAdd = methodsToAdd;
         this.componentType = ClassName.get(packageName, componentName);
         this.leafGen = generateLeaf();
@@ -32,11 +32,11 @@ public class Leaf {
         TypeSpec.Builder leafBuilder = TypeSpec
                 .classBuilder(leafObjName);
 
-        if(fieldsToAdd!=null) {
-            for (Fields fields : fieldsToAdd) {
-                leafBuilder.addField(fields.getField());
-                constructor.addParameter(fields.getDerivedParameter());
-                constructor.addStatement("this.$N = $N", fields.getFieldName(), fields.getFieldName());
+        if(fieldGenToAdd !=null) {
+            for (FieldGen fieldGen : fieldGenToAdd) {
+                leafBuilder.addField(fieldGen.getField());
+                constructor.addParameter(fieldGen.getDerivedParameter());
+                constructor.addStatement("this.$N = $N", fieldGen.getFieldName(), fieldGen.getFieldName());
             }
         }
         leafBuilder.addMethod(constructor.build())

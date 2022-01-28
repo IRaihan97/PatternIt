@@ -12,14 +12,14 @@ import javax.lang.model.element.Modifier;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Fields {
+public class FieldGen {
     private String fieldName;
     private Class fieldType;
     private ArrayList<Modifier> fieldModifiers;
     private FieldSpec field;
     private ParameterSpec derivedParameter;
 
-    public Fields(Class fieldType, String fieldName, ArrayList<Modifier> fieldModifiers){
+    public FieldGen(Class fieldType, String fieldName, ArrayList<Modifier> fieldModifiers){
         this.fieldType = fieldType;
         this.fieldName = fieldName;
         this.fieldModifiers = fieldModifiers;
@@ -45,6 +45,14 @@ public class Fields {
 
     public String getFieldName() {
         return fieldName;
+    }
+
+    public Class getFieldType() {
+        return fieldType;
+    }
+
+    public ArrayList<Modifier> getFieldModifiers() {
+        return fieldModifiers;
     }
 
     public FieldSpec getField(){

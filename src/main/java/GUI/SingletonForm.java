@@ -15,69 +15,77 @@ import java.util.ArrayList;
 
 
 public class SingletonForm {
-    private JTextField classNameInput;
-    private JLabel className;
-    private JComboBox fieldDataTypeBox;
-    private JComboBox fieldEncapsulationBox;
-    private JTextField fieldNameInput;
+//    private JTextField classNameInput;
+//    private JComboBox fieldDataTypeBox;
+//    private JTextField fieldNameInput;
     private JPanel mainPanel;
-    private JComboBox fieldModifierBox;
-    private JLabel fieldNameLabel;
-    private JLabel methodNameLabel;
-    private JComboBox methodEncapsulationBox;
-    private JComboBox methodDataTypeBox;
-    private JComboBox methodModifierBox;
     private JPanel classDefinerPanel;
-    private JPanel fieldDefinerPanel;
-    private JPanel methodDefinerPanel;
-    private JButton addFieldButton;
-    private JButton addMethodButton;
-    private JPanel fieldsPanel;
-    private JPanel methodsPanel;
-    private ArrayList<JPanel> addFieldPanel;
-    private ArrayList<JPanel> addMethodPanel;
-    private int currentPanelRow = 0;
-    private JLabel test;
+    private JLabel singletonLb;
+    private JTextField singletonName;
+    private JTextField packageName;
+    private JPanel addExtraPanel;
+    private JLabel pkgLb;
+    private JButton addFieldBtn;
+    private JButton addMethodBtn;
+    //    private JPanel fieldDefinerPanel;
+//    private JButton addFieldButton;
+//    private JButton addMethodButton;
+//    private JPanel fieldsPanel;
+//    private ArrayList<JPanel> addFieldPanel;
+//    private ArrayList<JPanel> addMethodPanel;
+//    private int currentPanelRow = 0;
+//    private JLabel test;
     private GridBagConstraints con = new GridBagConstraints();
 
     public SingletonForm(){
-        classNameInput.getDocument().addDocumentListener(new DocumentListener() {
+        addFieldBtn.addActionListener(new ActionListener() {
             @Override
-            public void insertUpdate(DocumentEvent e) {
-                SingletonClass.INSTANCE.setClassName(classNameInput.getText());
-            }
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                SingletonClass.INSTANCE.setClassName(classNameInput.getText());
-
-            }
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                SingletonClass.INSTANCE.setClassName(classNameInput.getText());
+            public void actionPerformed(ActionEvent e) {
+                Fields dialog = new Fields();
+                dialog.pack();
+                dialog.setVisible(true);
             }
         });
-        fieldNameInput.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
-                System.out.println(FieldsClass.INSTANCE.getFieldName());
-                System.out.println(fieldDataTypeBox.getSelectedItem());
-            }
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
-                System.out.println(FieldsClass.INSTANCE.getFieldName());
-                System.out.println(fieldDataTypeBox.getSelectedItem());
-            }
 
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
-                System.out.println(FieldsClass.INSTANCE.getFieldName());
-                System.out.println(fieldDataTypeBox.getSelectedItem());
-            }
-        });
+
+//        classNameInput.getDocument().addDocumentListener(new DocumentListener() {
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                SingletonClass.INSTANCE.setClassName(classNameInput.getText());
+//            }
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+//                SingletonClass.INSTANCE.setClassName(classNameInput.getText());
+//
+//            }
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//                SingletonClass.INSTANCE.setClassName(classNameInput.getText());
+//            }
+//        });
+//        fieldNameInput.getDocument().addDocumentListener(new DocumentListener() {
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
+//                System.out.println(FieldsClass.INSTANCE.getFieldName());
+//                System.out.println(fieldDataTypeBox.getSelectedItem());
+//            }
+//
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+//                FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
+//                System.out.println(FieldsClass.INSTANCE.getFieldName());
+//                System.out.println(fieldDataTypeBox.getSelectedItem());
+//            }
+//
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//                FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
+//                System.out.println(FieldsClass.INSTANCE.getFieldName());
+//                System.out.println(fieldDataTypeBox.getSelectedItem());
+//            }
+//        });
 
 //        fieldDataTypeBox.addActionListener(new ActionListener() {
 //            @Override
@@ -97,15 +105,15 @@ public class SingletonForm {
     private void generateMethodRow(){
     }
 
-    private void getAllInputs(){
-
-        FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
-        System.out.println(FieldsClass.INSTANCE.getFieldName());
-        System.out.println(fieldDataTypeBox.getSelectedIndex());
-    }
+//    private void getAllInputs(){
+//
+//        FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
+//        System.out.println(FieldsClass.INSTANCE.getFieldName());
+//        System.out.println(fieldDataTypeBox.getSelectedIndex());
+//    }
 
     public JComponent getContent() {
-        con.gridy=1;
+//        con.gridy=1;
         //mainPanel.setPreferredSize(new Dimension(500,100));
 //        addFieldButton.addActionListener(new ActionListener() {
 //            @Override
@@ -120,37 +128,37 @@ public class SingletonForm {
 //                currentPanelRow++;
 //            }
 //        });
-        addFieldButton.addActionListener(e -> {
-            addFieldRow(fieldsPanel, con);
-        });
+//        addFieldButton.addActionListener(e -> {
+//            addFieldRow(fieldsPanel, con);
+//        });
 
         return mainPanel;
     }
 
-    public void addFieldRow(JPanel panel, GridBagConstraints con){
-        JPanel newPanel = new JPanel();
-        newPanel.setLocation(fieldsPanel.getLocation().x, fieldsPanel.getLocation().y+100);
-        System.out.println(fieldDefinerPanel.getLocation().y);
-        GridBagLayout c = new GridBagLayout();
-        con.fill = GridBagConstraints.HORIZONTAL;
-
-        JLabel fieldName = new JLabel("Field Name");
-        JTextField fieldNameInput = new JTextField();
-        ComboBox encBox = new ComboBox();
-        createEncapsulationBox(encBox);
-        ComboBox typeBox = new ComboBox();
-        createTypeBox(typeBox);
-        ComboBox modBox = new ComboBox();
-        modBox.addItem("static");
-        newPanel.add(fieldName);
-        newPanel.add(fieldNameInput);
-        newPanel.add(encBox);
-        newPanel.add(typeBox);
-        newPanel.add(modBox);
-        panel.add(newPanel, con);
-        panel.revalidate();
-        con.gridy++;
-    }
+//    public void addFieldRow(JPanel panel, GridBagConstraints con){
+//        JPanel newPanel = new JPanel();
+//        newPanel.setLocation(fieldsPanel.getLocation().x, fieldsPanel.getLocation().y+100);
+//        System.out.println(fieldDefinerPanel.getLocation().y);
+//        GridBagLayout c = new GridBagLayout();
+//        con.fill = GridBagConstraints.HORIZONTAL;
+//
+//        JLabel fieldName = new JLabel("Field Name");
+//        JTextField fieldNameInput = new JTextField();
+//        ComboBox encBox = new ComboBox();
+//        createEncapsulationBox(encBox);
+//        ComboBox typeBox = new ComboBox();
+//        createTypeBox(typeBox);
+//        ComboBox modBox = new ComboBox();
+//        modBox.addItem("static");
+//        newPanel.add(fieldName);
+//        newPanel.add(fieldNameInput);
+//        newPanel.add(encBox);
+//        newPanel.add(typeBox);
+//        newPanel.add(modBox);
+//        panel.add(newPanel, con);
+//        panel.revalidate();
+//        con.gridy++;
+//    }
 
     private void createEncapsulationBox(ComboBox box){
         box.addItem("public");
@@ -168,27 +176,5 @@ public class SingletonForm {
         box.addItem("long");
     }
 
-    public JTextField getClassNameInput() {
-        return classNameInput;
-    }
 
-    public void setClassNameInput(JTextField classNameInput) {
-        this.classNameInput = classNameInput;
-    }
-
-    public JComboBox getFieldDataTypeBox() {
-        return fieldDataTypeBox;
-    }
-
-    public void setFieldDataTypeBox(JComboBox fieldDataTypeBox) {
-        this.fieldDataTypeBox = fieldDataTypeBox;
-    }
-
-    public JTextField getFieldNameInput() {
-        return fieldNameInput;
-    }
-
-    public void setFieldNameInput(JTextField fieldNameInput) {
-        this.fieldNameInput = fieldNameInput;
-    }
 }

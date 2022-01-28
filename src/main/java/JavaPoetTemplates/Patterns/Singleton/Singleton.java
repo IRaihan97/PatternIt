@@ -1,7 +1,7 @@
 package JavaPoetTemplates.Patterns.Singleton;
 
 import InputHolders.SingletonClass;
-import JavaPoetTemplates.Fields;
+import JavaPoetTemplates.FieldGen;
 import com.squareup.javapoet.*;
 
 import javax.lang.model.element.Modifier;
@@ -13,13 +13,13 @@ public class Singleton {
     private String singletonType;
     ClassName classType;
     private String packageName;
-    private ArrayList<Fields> fields;
+    private ArrayList<FieldGen> fields;
     private ArrayList<MethodSpec> methods;
     private TypeSpec classGen;
 
     public Singleton(String className,
                      String singletonType, String packageName,
-                     ArrayList<Fields> fields, ArrayList<MethodSpec> methods) {
+                     ArrayList<FieldGen> fields, ArrayList<MethodSpec> methods) {
         this.className = SingletonClass.capitalize(className);
         this.objectName = className.substring(0,1).toLowerCase() + className.substring(1);
         this.singletonType = singletonType;

@@ -1,9 +1,8 @@
 package Actions;
 
-import GUI.SingletonForm;
 import GUI.SingletonGenDialogWrapper;
 import InputHolders.SingletonClass;
-import JavaPoetTemplates.Fields;
+import JavaPoetTemplates.FieldGen;
 import JavaPoetTemplates.Methods;
 import JavaPoetTemplates.Patterns.Composite.Component;
 import JavaPoetTemplates.Patterns.Composite.Composite;
@@ -61,19 +60,19 @@ public class ClassGenAction extends AnAction {
         ArrayList<Modifier> modifiers1 = new ArrayList<>();
         modifiers1.add(Modifier.PRIVATE);
         modifiers1.add(Modifier.STATIC);
-        Fields field1 = new Fields(int.class, "Anas", modifiers1);
+        FieldGen field1 = new FieldGen(int.class, "Anas", modifiers1);
 
         ArrayList<Modifier> modifiers2 = new ArrayList<>();
         modifiers1.add(Modifier.PUBLIC);
         modifiers1.add(Modifier.STATIC);
-        Fields field2 = new Fields(String.class, "Cannot", modifiers2);
+        FieldGen field2 = new FieldGen(String.class, "Cannot", modifiers2);
 
         ArrayList<Modifier> modifiers3 = new ArrayList<>();
         modifiers1.add(Modifier.PROTECTED);
         modifiers1.add(Modifier.STATIC);
-        Fields field3 = new Fields(String.class, "TakeYourCall", modifiers3);
+        FieldGen field3 = new FieldGen(String.class, "TakeYourCall", modifiers3);
 
-        ArrayList<Fields> fields = new ArrayList<>();
+        ArrayList<FieldGen> fields = new ArrayList<>();
         fields.add(field1);
         fields.add(field2);
         fields.add(field3);

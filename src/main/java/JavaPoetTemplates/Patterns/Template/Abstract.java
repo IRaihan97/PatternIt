@@ -1,26 +1,24 @@
 package JavaPoetTemplates.Patterns.Template;
 
-import JavaPoetTemplates.Fields;
+import JavaPoetTemplates.FieldGen;
 import JavaPoetTemplates.Methods;
-import JavaPoetTemplates.Patterns.Composite.Component;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import org.jetbrains.annotations.Debug;
 
 import javax.lang.model.element.Modifier;
 import java.util.ArrayList;
 
 public class Abstract {
     private String absClassName;
-    private ArrayList<Fields> fieldsToAdd;
+    private ArrayList<FieldGen> fieldGenToAdd;
     private ArrayList<Methods> methodsToAdd;
     private ClassName componentType;
     private TypeSpec absClassGen;
 
-    public Abstract(String absClassName, String packageName, ArrayList<Fields> fieldsToAdd, ArrayList<Methods> methodsToAdd) {
+    public Abstract(String absClassName, String packageName, ArrayList<FieldGen> fieldGenToAdd, ArrayList<Methods> methodsToAdd) {
         this.absClassName = absClassName;
-        this.fieldsToAdd = fieldsToAdd;
+        this.fieldGenToAdd = fieldGenToAdd;
         this.methodsToAdd = methodsToAdd;
         this.componentType = ClassName.get(packageName, absClassName);
         this.absClassGen = generateAbsClass();
@@ -30,8 +28,8 @@ public class Abstract {
         TypeSpec.Builder absClassBuilder = TypeSpec
                 .classBuilder(absClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
-        if(fieldsToAdd!=null){
-            fieldsToAdd.forEach((field) -> absClassBuilder.addField(field.getField()));
+        if(fieldGenToAdd !=null){
+            fieldGenToAdd.forEach((field) -> absClassBuilder.addField(field.getField()));
         }
         if(methodsToAdd!=null){
 
@@ -53,8 +51,8 @@ public class Abstract {
         return componentType;
     }
 
-    public ArrayList<Fields> getFieldsToAdd() {
-        return fieldsToAdd;
+    public ArrayList<FieldGen> getFieldsToAdd() {
+        return fieldGenToAdd;
     }
 
     public ArrayList<Methods> getMethodsToAdd() {

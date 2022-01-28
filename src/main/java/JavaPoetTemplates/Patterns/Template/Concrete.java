@@ -1,6 +1,6 @@
 package JavaPoetTemplates.Patterns.Template;
 
-import JavaPoetTemplates.Fields;
+import JavaPoetTemplates.FieldGen;
 import JavaPoetTemplates.Methods;
 import com.squareup.javapoet.TypeSpec;
 
@@ -11,7 +11,7 @@ public class Concrete {
     private Abstract templateClass;
     private TypeSpec concreteGen;
     private ArrayList<Methods> methodsToAdd;
-    private ArrayList<Fields> fieldsToAdd;
+    private ArrayList<FieldGen> fieldGenToAdd;
 
     public Concrete(String concreteName, Abstract templateClass) {
         this.concreteName = concreteName;
