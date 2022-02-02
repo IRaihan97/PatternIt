@@ -3,12 +3,15 @@ package JavaPoetTemplates;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
+import lombok.Data;
 
 import javax.lang.model.element.Modifier;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-public class Methods {
+@Data
+public class MethodGen {
+
     private String methodName;
     private ArrayList<Modifier> methodModifiers;
     private Class methodType;
@@ -18,9 +21,9 @@ public class Methods {
     private Modifier singleModifier;
     private MethodSpec method;
 
-    public Methods(String methodName, ArrayList<Modifier> methodModifiers,
-                   Class methodType, ArrayList<Class> parameterType,
-                   ArrayList<String> parameterName, ArrayList<String> statements)
+    public MethodGen(String methodName, ArrayList<Modifier> methodModifiers,
+                     Class methodType, ArrayList<Class> parameterType,
+                     ArrayList<String> parameterName, ArrayList<String> statements)
     {
         this.methodName = methodName;
         this.methodModifiers = methodModifiers;
@@ -31,7 +34,7 @@ public class Methods {
         this.method = generateMethod();
     }
 
-    public Methods(String methodName, Class methodType, Modifier singleModifier) {
+    public MethodGen(String methodName, Class methodType, Modifier singleModifier) {
         this.methodName = methodName;
         this.methodType = methodType;
         this.singleModifier = singleModifier;
@@ -59,17 +62,5 @@ public class Methods {
         }
 
         return methodBuilder.build();
-    }
-
-    public Class getMethodType() {
-        return methodType;
-    }
-
-    public MethodSpec getMethod(){
-        return method;
-    }
-
-    public String getMethodName() {
-        return methodName;
     }
 }

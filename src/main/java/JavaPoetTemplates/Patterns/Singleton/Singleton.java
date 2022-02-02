@@ -2,6 +2,7 @@ package JavaPoetTemplates.Patterns.Singleton;
 
 import InputHolders.SingletonClass;
 import JavaPoetTemplates.FieldGen;
+import JavaPoetTemplates.MethodGen;
 import com.squareup.javapoet.*;
 
 import javax.lang.model.element.Modifier;
@@ -14,12 +15,12 @@ public class Singleton {
     ClassName classType;
     private String packageName;
     private ArrayList<FieldGen> fields;
-    private ArrayList<MethodSpec> methods;
+    private ArrayList<MethodGen> methods;
     private TypeSpec classGen;
 
     public Singleton(String className,
                      String singletonType, String packageName,
-                     ArrayList<FieldGen> fields, ArrayList<MethodSpec> methods) {
+                     ArrayList<FieldGen> fields, ArrayList<MethodGen> methods) {
         this.className = SingletonClass.capitalize(className);
         this.objectName = className.substring(0,1).toLowerCase() + className.substring(1);
         this.singletonType = singletonType;
@@ -69,7 +70,7 @@ public class Singleton {
         if(singletonType.matches("Lazy")){
             lazySingleton(getInstance);
         }
-        else if(singletonType.matches("Sync")){
+        else if(singletonType.matches("ThreadSafe")){
             syncSingleton(getInstance);
         }
         else{
@@ -140,7 +141,7 @@ public class Singleton {
             fields.forEach((field) -> classBuilder.addField(field.getField()));
         }
         if(methods != null){
-            methods.forEach((method) -> classBuilder.addMethod(method));
+            methods.forEach((method) -> classBuilder.addMethod(method.getMethod()));
         }
     }
 

@@ -1,53 +1,52 @@
 package GUI;
 
 import InputHolders.SingletonClass;
-import JavaPoetTemplates.FieldGen;
+import JavaPoetTemplates.MethodGen;
 import com.intellij.openapi.ui.ComboBox;
 
+import javax.lang.model.element.Modifier;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.lang.model.element.Modifier;
 import java.util.ArrayList;
 
-public class Fields extends JDialog {
+public class Methods extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JPanel dialogButtonPanel;
     private JPanel buttonsPanel;
-    private JPanel fieldDefinerPanel = new JPanel();
+    private JPanel methodDefinerPanel = new JPanel();
     private JButton addBtn;
-    private JScrollPane fieldScroll;
+    private JScrollPane methodScroll;
     private ArrayList<JComponent[]> componentsToAdd = new ArrayList<>();
-    private ArrayList<JComponent[]> currentComponents = new ArrayList<>();
+    private ArrayList<JComponent[]> currentComponents;
     private int panelIndex = 0;
     GridBagConstraints con = new GridBagConstraints();
 
-    public Fields() {
-        currentComponents = SingletonClass.INSTANCE.getFieldsToAddComps();
-        con.gridy=1;
-        contentPane.setPreferredSize(new Dimension(650,200));
-        fieldDefinerPanel.setPreferredSize(new Dimension(600,150));
-        fieldScroll.setViewportView(fieldDefinerPanel);
-        fieldScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        fieldScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        fieldScroll.setPreferredSize(new Dimension(600,130));
-        fieldScroll.setEnabled(true);
-        if(SingletonClass.INSTANCE.getFieldsToAddComps()!=null){
-            fieldScroll.setPreferredSize(new Dimension(600,130));
-            componentsToAdd = SingletonClass.INSTANCE.getFieldsToAddComps();
-            for(int i = 0; i < componentsToAdd.size(); i++){
-                fieldAddition();
-                fieldScroll.repaint();
-                fieldScroll.revalidate();
+    public Methods() {
+        currentComponents = SingletonClass.INSTANCE.getMethodsToAddComps();
+        con.gridy = 1;
+        contentPane.setPreferredSize(new Dimension(650, 200));
+        methodDefinerPanel.setPreferredSize(new Dimension(600, 150));
+        methodScroll.setViewportView(methodDefinerPanel);
+        methodScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        methodScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        methodScroll.setPreferredSize(new Dimension(600, 130));
+        methodScroll.setEnabled(true);
+        if (SingletonClass.INSTANCE.getMethodsToAddComps() != null) {
+            methodScroll.setPreferredSize(new Dimension(600, 130));
+            componentsToAdd = SingletonClass.INSTANCE.getMethodsToAddComps();
+            for (int i = 0; i < componentsToAdd.size(); i++) {
+                methodAddition();
+                methodScroll.repaint();
+                methodScroll.revalidate();
             }
         }
         contentPane.revalidate();
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-
 
 
         buttonOK.addActionListener(new ActionListener() {
@@ -60,7 +59,7 @@ public class Fields extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addToComponentList();
-                fieldAddition();
+                methodAddition();
             }
         });
 
@@ -88,19 +87,19 @@ public class Fields extends JDialog {
 
     private void onOK() {
         // add your code here
-        SingletonClass.INSTANCE.getField().clear();
-        for(int i =0; i < componentsToAdd.size(); i++){
+        SingletonClass.INSTANCE.getMethods().clear();
+        for (int i = 0; i < componentsToAdd.size(); i++) {
             JComponent[] components = componentsToAdd.get(i);
             ArrayList<javax.lang.model.element.Modifier> modifiers = new ArrayList<>();
-            JTextField fieldInput = (JTextField) components[1];
+            JTextField methodInput = (JTextField) components[1];
             modifiers.add(modDropDown((ComboBox) components[2]));
             modifiers.add(modDropDown((ComboBox) components[3]));
             Class type = typeDropDown((ComboBox) components[4]);
-            FieldGen field = new FieldGen(type, fieldInput.getText(), modifiers);
-            SingletonClass.INSTANCE.addFields(field);
-            SingletonClass.INSTANCE.setFieldsToAddComps(componentsToAdd);
-            panelIndex=0;
-            con.gridy=1;
+            MethodGen method = new MethodGen(methodInput.getText(), type, modifiers.get(0));
+            SingletonClass.INSTANCE.addMethods(method);
+            SingletonClass.INSTANCE.setMethodsToAddComps(componentsToAdd);
+            panelIndex = 0;
+            con.gridy = 1;
         }
         dispose();
     }
@@ -108,25 +107,25 @@ public class Fields extends JDialog {
     private void onCancel() {
         // add your code here if necessary
 
-        SingletonClass.INSTANCE.setFieldsToAddComps(currentComponents);
+        SingletonClass.INSTANCE.setMethodsToAddComps(currentComponents);
         dispose();
     }
 
-    private void fieldAddition(){
-        addFieldRow(fieldDefinerPanel, con);
-        Dimension d = new Dimension(fieldDefinerPanel.getWidth(),fieldDefinerPanel.getHeight()+40);
-        fieldDefinerPanel.setPreferredSize(d);
-        fieldDefinerPanel.repaint();
-        fieldDefinerPanel.revalidate();
+    private void methodAddition() {
+        addMethodRow(methodDefinerPanel, con);
+        Dimension d = new Dimension(methodDefinerPanel.getWidth(), methodDefinerPanel.getHeight() + 40);
+        methodDefinerPanel.setPreferredSize(d);
+        methodDefinerPanel.repaint();
+        methodDefinerPanel.revalidate();
     }
 
-    private Modifier modDropDown(ComboBox box){
-        switch (box.getSelectedItem().toString()){
+    private Modifier modDropDown(ComboBox box) {
+        switch (box.getSelectedItem().toString()) {
             case ("public"):
                 return Modifier.PUBLIC;
-            case("static"):
+            case ("static"):
                 return Modifier.STATIC;
-            case("protected"):
+            case ("protected"):
                 return Modifier.PROTECTED;
             default:
                 return Modifier.PRIVATE;
@@ -134,24 +133,24 @@ public class Fields extends JDialog {
         }
     }
 
-    private Class typeDropDown(ComboBox box){
-        switch(box.getSelectedItem().toString()){
-            case("int"):
+    private Class typeDropDown(ComboBox box) {
+        switch (box.getSelectedItem().toString()) {
+            case ("int"):
                 return int.class;
 
-            case("String"):
+            case ("String"):
                 return String.class;
 
-            case("float"):
+            case ("float"):
                 return float.class;
 
-            case("double"):
+            case ("double"):
                 return double.class;
 
-            case("byte"):
+            case ("byte"):
                 return byte.class;
 
-            case("char"):
+            case ("char"):
                 return char.class;
 
             default:
@@ -161,7 +160,7 @@ public class Fields extends JDialog {
 
     }
 
-    private void addToComponentList(){
+    private void addToComponentList() {
         JComponent[] component = new JComponent[5];
         JLabel fieldName = new JLabel("Field Name");
         JTextField fieldNameInput = new JTextField();
@@ -181,32 +180,25 @@ public class Fields extends JDialog {
     }
 
 
-    public void addFieldRow(JPanel panel, GridBagConstraints con){
+    public void addMethodRow(JPanel panel, GridBagConstraints con) {
         JPanel newPanel = new JPanel();
-        System.out.println(panel.getLocation().y);
         JComponent[] components = componentsToAdd.get(panelIndex);
         for (int i = 0; i < 5; i++) {
             newPanel.add(components[i]);
         }
-
-//        newPanel.add(fieldName);
-//        newPanel.add(fieldNameInput);
-//        newPanel.add(encBox);
-//        newPanel.add(typeBox);
-//        newPanel.add(modBox);
         panel.add(newPanel, con);
         panel.revalidate();
         panelIndex++;
         con.gridy++;
     }
 
-    private void createEncapsulationBox(ComboBox box){
+    private void createEncapsulationBox(ComboBox box) {
         box.addItem("public");
         box.addItem("private");
         box.addItem("protected");
     }
 
-    private void createTypeBox(ComboBox box){
+    private void createTypeBox(ComboBox box) {
         box.addItem("int");
         box.addItem("char");
         box.addItem("double");
@@ -215,13 +207,4 @@ public class Fields extends JDialog {
         box.addItem("short");
         box.addItem("long");
     }
-
-
-
-//    public static void main(String[] args) {
-//        Fields dialog = new Fields();
-//        dialog.pack();
-//        dialog.setVisible(true);
-//        System.exit(0);
-//    }
 }

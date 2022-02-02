@@ -27,14 +27,6 @@ public class SingletonForm {
     private JLabel pkgLb;
     private JButton addFieldBtn;
     private JButton addMethodBtn;
-    //    private JPanel fieldDefinerPanel;
-//    private JButton addFieldButton;
-//    private JButton addMethodButton;
-//    private JPanel fieldsPanel;
-//    private ArrayList<JPanel> addFieldPanel;
-//    private ArrayList<JPanel> addMethodPanel;
-//    private int currentPanelRow = 0;
-//    private JLabel test;
     private GridBagConstraints con = new GridBagConstraints();
 
     public SingletonForm(){
@@ -43,58 +35,56 @@ public class SingletonForm {
             public void actionPerformed(ActionEvent e) {
                 Fields dialog = new Fields();
                 dialog.pack();
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            }
+        });
+
+        addMethodBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Methods dialog = new Methods();
+                dialog.pack();
+                dialog.setLocationRelativeTo(null);
                 dialog.setVisible(true);
             }
         });
 
 
 
-//        classNameInput.getDocument().addDocumentListener(new DocumentListener() {
-//            @Override
-//            public void insertUpdate(DocumentEvent e) {
-//                SingletonClass.INSTANCE.setClassName(classNameInput.getText());
-//            }
-//            @Override
-//            public void removeUpdate(DocumentEvent e) {
-//                SingletonClass.INSTANCE.setClassName(classNameInput.getText());
-//
-//            }
-//            @Override
-//            public void changedUpdate(DocumentEvent e) {
-//                SingletonClass.INSTANCE.setClassName(classNameInput.getText());
-//            }
-//        });
-//        fieldNameInput.getDocument().addDocumentListener(new DocumentListener() {
-//            @Override
-//            public void insertUpdate(DocumentEvent e) {
-//                FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
-//                System.out.println(FieldsClass.INSTANCE.getFieldName());
-//                System.out.println(fieldDataTypeBox.getSelectedItem());
-//            }
-//
-//            @Override
-//            public void removeUpdate(DocumentEvent e) {
-//                FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
-//                System.out.println(FieldsClass.INSTANCE.getFieldName());
-//                System.out.println(fieldDataTypeBox.getSelectedItem());
-//            }
-//
-//            @Override
-//            public void changedUpdate(DocumentEvent e) {
-//                FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
-//                System.out.println(FieldsClass.INSTANCE.getFieldName());
-//                System.out.println(fieldDataTypeBox.getSelectedItem());
-//            }
-//        });
+        singletonName.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SingletonClass.INSTANCE.setClassName(singletonName.getText());
+            }
 
-//        fieldDataTypeBox.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                //if(fieldDataTypeBox.getSelectedItem().toString().matches("char")){
-//                    System.out.println(fieldDataTypeBox.getSelectedItem().toString());
-//                //}
-//            }
-//        });
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                SingletonClass.INSTANCE.setClassName(singletonName.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                SingletonClass.INSTANCE.setClassName(singletonName.getText());
+            }
+        });
+
+        packageName.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SingletonClass.INSTANCE.setPackageName(packageName.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                SingletonClass.INSTANCE.setPackageName(packageName.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                SingletonClass.INSTANCE.setPackageName(packageName.getText());
+            }
+        });
 
     }
     private void addFieldRow(){
@@ -105,76 +95,15 @@ public class SingletonForm {
     private void generateMethodRow(){
     }
 
-//    private void getAllInputs(){
-//
-//        FieldsClass.INSTANCE.setFieldName(fieldNameInput.getText());
-//        System.out.println(FieldsClass.INSTANCE.getFieldName());
-//        System.out.println(fieldDataTypeBox.getSelectedIndex());
-//    }
 
     public JComponent getContent() {
-//        con.gridy=1;
-        //mainPanel.setPreferredSize(new Dimension(500,100));
-//        addFieldButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                System.out.println("Button Pressed");
-//                int y = fieldNameLabel.getVerticalTextPosition();
-//                int x = fieldNameLabel.getHorizontalTextPosition();
-//                JLabel newLable = new JLabel("Field");
-//                fieldDefinerPanel.add(newLable);
-//                fieldDefinerPanel.revalidate();
-//
-//                currentPanelRow++;
-//            }
-//        });
-//        addFieldButton.addActionListener(e -> {
-//            addFieldRow(fieldsPanel, con);
-//        });
+
 
         return mainPanel;
     }
 
-//    public void addFieldRow(JPanel panel, GridBagConstraints con){
-//        JPanel newPanel = new JPanel();
-//        newPanel.setLocation(fieldsPanel.getLocation().x, fieldsPanel.getLocation().y+100);
-//        System.out.println(fieldDefinerPanel.getLocation().y);
-//        GridBagLayout c = new GridBagLayout();
-//        con.fill = GridBagConstraints.HORIZONTAL;
-//
-//        JLabel fieldName = new JLabel("Field Name");
-//        JTextField fieldNameInput = new JTextField();
-//        ComboBox encBox = new ComboBox();
-//        createEncapsulationBox(encBox);
-//        ComboBox typeBox = new ComboBox();
-//        createTypeBox(typeBox);
-//        ComboBox modBox = new ComboBox();
-//        modBox.addItem("static");
-//        newPanel.add(fieldName);
-//        newPanel.add(fieldNameInput);
-//        newPanel.add(encBox);
-//        newPanel.add(typeBox);
-//        newPanel.add(modBox);
-//        panel.add(newPanel, con);
-//        panel.revalidate();
-//        con.gridy++;
-//    }
 
-    private void createEncapsulationBox(ComboBox box){
-        box.addItem("public");
-        box.addItem("private");
-        box.addItem("protected");
-    }
 
-    private void createTypeBox(ComboBox box){
-        box.addItem("int");
-        box.addItem("char");
-        box.addItem("double");
-        box.addItem("float");
-        box.addItem("byte");
-        box.addItem("short");
-        box.addItem("long");
-    }
 
 
 }

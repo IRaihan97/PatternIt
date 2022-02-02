@@ -3,11 +3,10 @@ package Actions;
 import GUI.SingletonGenDialogWrapper;
 import InputHolders.SingletonClass;
 import JavaPoetTemplates.FieldGen;
-import JavaPoetTemplates.Methods;
+import JavaPoetTemplates.MethodGen;
 import JavaPoetTemplates.Patterns.Composite.Component;
 import JavaPoetTemplates.Patterns.Composite.Composite;
 import JavaPoetTemplates.Patterns.Composite.Leaf;
-import JavaPoetTemplates.Patterns.Singleton.Singleton;
 import JavaPoetTemplates.Patterns.Template.Abstract;
 import JavaPoetTemplates.Patterns.Template.Concrete;
 import InputHolders.GeneratedClass;
@@ -91,7 +90,7 @@ public class ClassGenAction extends AnAction {
 
 
 
-        Methods method1 = new Methods("SimpleMethod1",
+        MethodGen method1 = new MethodGen("SimpleMethod1",
                 methodsMod1, String.class, null, null, statements1);
 
 
@@ -108,21 +107,21 @@ public class ClassGenAction extends AnAction {
         parameterNames1.add("charParameter");
         parameterNames1.add("boolParameter");
 
-        ArrayList<Methods> abstractMethods = new ArrayList<>();
-        Methods absMethod1 = new Methods("Example1", void.class, Modifier.PUBLIC);
-        Methods absMethod2 = new Methods("Example2", void.class, Modifier.PUBLIC);
-        Methods absMethod3 = new Methods("Example3", void.class, Modifier.PUBLIC);
-        Methods absMethod4 = new Methods("Example4", void.class, Modifier.PUBLIC);
+        ArrayList<MethodGen> abstractMethods = new ArrayList<>();
+        MethodGen absMethod1 = new MethodGen("Example1", void.class, Modifier.PUBLIC);
+        MethodGen absMethod2 = new MethodGen("Example2", void.class, Modifier.PUBLIC);
+        MethodGen absMethod3 = new MethodGen("Example3", void.class, Modifier.PUBLIC);
+        MethodGen absMethod4 = new MethodGen("Example4", void.class, Modifier.PUBLIC);
         abstractMethods.add(absMethod1);
         abstractMethods.add(absMethod2);
         abstractMethods.add(absMethod3);
         abstractMethods.add(absMethod4);
 
 
-        Methods method2 = new Methods("SimpleMethod2",
+        MethodGen method2 = new MethodGen("SimpleMethod2",
                 methodsMod2, int.class, parameterTypes1, parameterNames1, statements1);
 
-        Methods method3 = new Methods("SimpleMethod3",
+        MethodGen method3 = new MethodGen("SimpleMethod3",
                 methodsMod1, float.class, null, null, statements1);
 
         ArrayList<MethodSpec> methods = new ArrayList<>();
@@ -144,55 +143,60 @@ public class ClassGenAction extends AnAction {
 //        dialogWrapper.show();
 
 
+        SingletonClass.INSTANCE.setSingletonType(action);
+        System.out.println(action);
+//        if(action.equals("Eager")) {
+        SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject());
+        singletonUI.show();
 
-        if(action.equals("Eager")) {
-            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
-            singletonUI.show();
-            Singleton singletonClass = new Singleton(SingletonClass.INSTANCE.getClassName(), "Eager", "Singleton");
-            file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
-            try {
-                file.writeTo(outPut);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else if(action.equals("Lazy")) {
-//            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
-//            singletonUI.show();
-            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"withLazyAndExtra", "Lazy", "Singleton", fields, methods);
-            file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
-            try {
-                file.writeTo(outPut);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
-        else if(action.equals("ThreadSafe")) {
-//            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
-//            singletonUI.show();
-            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"SyncImplementation", "Sync", "Singleton");
-            file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
-            try {
-                file.writeTo(outPut);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+            //Singleton singletonClass = new Singleton(SingletonClass.INSTANCE.getClassName(), "Eager", "Singleton");
+        file = JavaFile.builder(SingletonClass.INSTANCE.getPackageName(), SingletonClass.INSTANCE.getClassGen()).build();
+        try {
+           file.writeTo(outPut);
+        } catch (IOException e) {
+            e.printStackTrace();
 
-        else if(action.equals("Enum")){
-//            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
-//            singletonUI.show();
-            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"EnumImplementation", "Enum", "Singleton");
-            file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
-            try {
-                file.writeTo(outPut);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
+//            }
+//        }
+//        else if(action.equals("Lazy")) {
+////            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
+////            singletonUI.show();
+//            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"withLazyAndExtra", "Lazy", "Singleton", fields, methods);
+//            file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
+//            try {
+//                file.writeTo(outPut);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        else if(action.equals("ThreadSafe")) {
+////            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
+////            singletonUI.show();
+//            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"SyncImplementation", "Sync", "Singleton");
+//            file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
+//            try {
+//                file.writeTo(outPut);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        else if(action.equals("Enum")){
+////            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject(), "Eager");
+////            singletonUI.show();
+//            Singleton singletonClass = new Singleton(GeneratedClass.INSTANCE.getClassName()+"EnumImplementation", "Enum", "Singleton");
+//            file = JavaFile.builder("Singleton", singletonClass.getClassGen()).build();
+//            try {
+//                file.writeTo(outPut);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
-        else if(action.equals("Composite")) {
+        if(action.equals("Composite")) {
             String packageName = "Composite";
             Component interfaceFile = new Component("Component", abstracMethods);
             file = JavaFile.builder(packageName, interfaceFile.getInterfaceGen()).build();

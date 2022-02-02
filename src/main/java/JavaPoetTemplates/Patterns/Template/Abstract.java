@@ -1,7 +1,7 @@
 package JavaPoetTemplates.Patterns.Template;
 
 import JavaPoetTemplates.FieldGen;
-import JavaPoetTemplates.Methods;
+import JavaPoetTemplates.MethodGen;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -12,14 +12,14 @@ import java.util.ArrayList;
 public class Abstract {
     private String absClassName;
     private ArrayList<FieldGen> fieldGenToAdd;
-    private ArrayList<Methods> methodsToAdd;
+    private ArrayList<MethodGen> methodGenToAdd;
     private ClassName componentType;
     private TypeSpec absClassGen;
 
-    public Abstract(String absClassName, String packageName, ArrayList<FieldGen> fieldGenToAdd, ArrayList<Methods> methodsToAdd) {
+    public Abstract(String absClassName, String packageName, ArrayList<FieldGen> fieldGenToAdd, ArrayList<MethodGen> methodGenToAdd) {
         this.absClassName = absClassName;
         this.fieldGenToAdd = fieldGenToAdd;
-        this.methodsToAdd = methodsToAdd;
+        this.methodGenToAdd = methodGenToAdd;
         this.componentType = ClassName.get(packageName, absClassName);
         this.absClassGen = generateAbsClass();
     }
@@ -31,16 +31,16 @@ public class Abstract {
         if(fieldGenToAdd !=null){
             fieldGenToAdd.forEach((field) -> absClassBuilder.addField(field.getField()));
         }
-        if(methodsToAdd!=null){
+        if(methodGenToAdd !=null){
 
-            methodsToAdd.forEach((method) -> absClassBuilder.addMethod(method.getMethod()));
+            methodGenToAdd.forEach((method) -> absClassBuilder.addMethod(method.getMethod()));
         }
         MethodSpec.Builder finalMethod = MethodSpec
                 .methodBuilder("protectedMethodExample")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addComment("This is a generic definition for the final method")
                 .addComment("You can apply your own method definition here");
-        methodsToAdd.forEach((method) -> finalMethod.addStatement("$L()", method.getMethodName()));
+        methodGenToAdd.forEach((method) -> finalMethod.addStatement("$L()", method.getMethodName()));
         absClassBuilder.addMethod(finalMethod.build());
 
         return absClassBuilder.build();
@@ -55,8 +55,8 @@ public class Abstract {
         return fieldGenToAdd;
     }
 
-    public ArrayList<Methods> getMethodsToAdd() {
-        return methodsToAdd;
+    public ArrayList<MethodGen> getMethodsToAdd() {
+        return methodGenToAdd;
     }
 
     public TypeSpec getAbsClassGen() {

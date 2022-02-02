@@ -45,6 +45,7 @@ public class ClassGenerator {
             }
         });
     }
+
     public JComponent getContent() {
         return mainPanel;
     }

@@ -1,5 +1,6 @@
 package GUI;
 
+import InputHolders.SingletonClass;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.sun.istack.Nullable;
@@ -13,7 +14,8 @@ public class SingletonGenDialogWrapper extends DialogWrapper {
     private ClassGenerator classGenForm;
     private SingletonForm singletonForm;
     private String singletonMode;
-    public SingletonGenDialogWrapper(@Nullable Project project, String singletonMode) {
+
+    public SingletonGenDialogWrapper(@Nullable Project project) {
         super(project);
         this.singletonMode = singletonMode;
         singletonForm = new SingletonForm();
@@ -64,5 +66,13 @@ public class SingletonGenDialogWrapper extends DialogWrapper {
 
         return singletonForm.getContent();
 
+    }
+
+    @Override
+    protected void doOKAction() {
+        SingletonClass.INSTANCE.generateClass();
+        SingletonClass.INSTANCE.getFieldsToAddComps().clear();
+        SingletonClass.INSTANCE.getMethodsToAddComps().clear();
+        super.doOKAction();    //To change body of overridden methods use File | Settings | File Templates.
     }
 }
