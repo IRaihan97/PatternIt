@@ -1,7 +1,7 @@
 package Actions;
 
 import GUI.SingletonGenDialogWrapper;
-import InputHolders.SingletonClass;
+import InputHolders.ClassInputs;
 import JavaPoetTemplates.FieldGen;
 import JavaPoetTemplates.MethodGen;
 import JavaPoetTemplates.Patterns.Composite.Component;
@@ -18,6 +18,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeSpec;
+import org.jsoup.select.Evaluator;
 
 import javax.lang.model.element.Modifier;
 import java.io.File;
@@ -90,8 +92,8 @@ public class ClassGenAction extends AnAction {
 
 
 
-        MethodGen method1 = new MethodGen("SimpleMethod1",
-                methodsMod1, String.class, null, null, statements1);
+//        MethodGen method1 = new MethodGen("SimpleMethod1",
+//                methodsMod1, String.class, null, null, statements1);
 
 
         ArrayList<Modifier> methodsMod2 = new ArrayList<>();
@@ -118,14 +120,14 @@ public class ClassGenAction extends AnAction {
         abstractMethods.add(absMethod4);
 
 
-        MethodGen method2 = new MethodGen("SimpleMethod2",
-                methodsMod2, int.class, parameterTypes1, parameterNames1, statements1);
+//        MethodGen method2 = new MethodGen("SimpleMethod2",
+//                methodsMod2, int.class, parameterTypes1, parameterNames1, statements1);
+//
+//        MethodGen method3 = new MethodGen("SimpleMethod3",
+//                methodsMod1, float.class, null, null, statements1);
 
-        MethodGen method3 = new MethodGen("SimpleMethod3",
-                methodsMod1, float.class, null, null, statements1);
-
-        ArrayList<MethodSpec> methods = new ArrayList<>();
-        methods.add(method1.getMethod());
+//        ArrayList<MethodSpec> methods = new ArrayList<>();
+//        methods.add(method1.getMethod());
 
         ArrayList<MethodSpec> abstracMethods = new ArrayList<>();;
         abstracMethods.add(MethodSpec.methodBuilder("abstractExample1")
@@ -143,21 +145,30 @@ public class ClassGenAction extends AnAction {
 //        dialogWrapper.show();
 
 
-        SingletonClass.INSTANCE.setSingletonType(action);
-        System.out.println(action);
-//        if(action.equals("Eager")) {
+
+
+        ClassInputs.INSTANCE.setPatternToGenerate(action);
         SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject());
         singletonUI.show();
 
-
-            //Singleton singletonClass = new Singleton(SingletonClass.INSTANCE.getClassName(), "Eager", "Singleton");
-        file = JavaFile.builder(SingletonClass.INSTANCE.getPackageName(), SingletonClass.INSTANCE.getClassGen()).build();
-        try {
-           file.writeTo(outPut);
-        } catch (IOException e) {
-            e.printStackTrace();
-
+        ArrayList<TypeSpec> filesToWrite  = ClassInputs.INSTANCE.getClassGen();
+        for(int i = 0; i < filesToWrite.size(); i++){
+            file = JavaFile.builder(ClassInputs.INSTANCE.getPackageName(),filesToWrite.get(i)).build();
+            try {
+                file.writeTo(outPut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        ClassInputs.INSTANCE.clearAll();
+
+//        filesToWrite.forEach(
+//                (fileToWrite) -> {
+//                    file = JavaFile.builder(ClassInputs.INSTANCE.getPackageName(), fileToWrite).build();
+//                });
+        //Singleton singletonClass = new Singleton(SingletonClass.INSTANCE.getClassName(), "Eager", "Singleton");
+
+
 //            }
 //        }
 //        else if(action.equals("Lazy")) {
@@ -212,7 +223,7 @@ public class ClassGenAction extends AnAction {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Leaf leafObj = new Leaf(interfaceFile, GeneratedClass.INSTANCE.getClassName()+"Leaf",packageName, fields, methods);
+            Leaf leafObj = new Leaf(interfaceFile, GeneratedClass.INSTANCE.getClassName()+"Leaf",packageName, fields, null);
             file = JavaFile.builder(packageName, leafObj.getLeafGen()).build();
             try {
                 file.writeTo(outPut);

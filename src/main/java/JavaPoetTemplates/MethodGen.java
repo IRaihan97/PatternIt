@@ -1,12 +1,10 @@
 package JavaPoetTemplates;
 
-import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeSpec;
+
 import lombok.Data;
 
 import javax.lang.model.element.Modifier;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 @Data
@@ -15,21 +13,28 @@ public class MethodGen {
     private String methodName;
     private ArrayList<Modifier> methodModifiers;
     private Class methodType;
-    private ArrayList<Class> parameterType;
-    private ArrayList<String> parameterName;
+    private ArrayList<ParameterGen> parameters;
     private ArrayList<String> statements;
     private Modifier singleModifier;
     private MethodSpec method;
 
     public MethodGen(String methodName, ArrayList<Modifier> methodModifiers,
-                     Class methodType, ArrayList<Class> parameterType,
-                     ArrayList<String> parameterName, ArrayList<String> statements)
+                     Class methodType, ArrayList<ParameterGen> parameters)
     {
         this.methodName = methodName;
         this.methodModifiers = methodModifiers;
         this.methodType = methodType;
-        this.parameterType = parameterType;
-        this.parameterName = parameterName;
+        this.parameters = parameters;
+        this.method = generateMethod();
+    }
+
+    public MethodGen(String methodName, ArrayList<Modifier> methodModifiers,
+                     Class methodType, ArrayList<ParameterGen> parameters, ArrayList<String> statements)
+    {
+        this.methodName = methodName;
+        this.methodModifiers = methodModifiers;
+        this.methodType = methodType;
+        this.parameters = parameters;
         this.statements = statements;
         this.method = generateMethod();
     }
@@ -45,20 +50,33 @@ public class MethodGen {
         MethodSpec.Builder methodBuilder = MethodSpec
                 .methodBuilder(methodName)
                 .returns(methodType);
+        methodBuilder.addComment("Add your Method Implementation Here");
         if(singleModifier!=null){
             methodBuilder.addModifiers(singleModifier);
         }
         if(methodModifiers!=null){
             methodModifiers.forEach((modifier) -> methodBuilder.addModifiers(modifier));
         }
-        if(parameterType != null || parameterName != null){
-            for(int i = 0; i < parameterType.size()-1; i++)
+        if(parameters != null){
+            for(int i = 0; i < parameters.size(); i++)
             {
-                methodBuilder.addParameter(parameterType.get(i), parameterName.get(i));
+                methodBuilder.addParameter(parameters.get(i).getParameterGen());
             }
         }
         if(statements!=null){
             statements.forEach((statements) -> methodBuilder.addStatement(statements));
+        }
+
+        if(methodType== int.class
+                || methodType == double.class
+                || methodType == long.class
+                || methodType == short.class
+                || methodType == float.class
+        ){
+            methodBuilder.addStatement("return 0");
+        }
+        else{
+            methodBuilder.addStatement("return null");
         }
 
         return methodBuilder.build();

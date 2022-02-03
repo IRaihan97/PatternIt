@@ -1,7 +1,8 @@
 package GUI;
 
-import InputHolders.SingletonClass;
+import InputHolders.ClassInputs;
 import JavaPoetTemplates.MethodGen;
+import JavaPoetTemplates.ParameterGen;
 import com.intellij.openapi.ui.ComboBox;
 
 import javax.lang.model.element.Modifier;
@@ -25,18 +26,19 @@ public class Methods extends JDialog {
     GridBagConstraints con = new GridBagConstraints();
 
     public Methods() {
-        currentComponents = SingletonClass.INSTANCE.getMethodsToAddComps();
+        currentComponents = ClassInputs.INSTANCE.getMethodsToAddComps();
         con.gridy = 1;
-        contentPane.setPreferredSize(new Dimension(650, 200));
-        methodDefinerPanel.setPreferredSize(new Dimension(600, 150));
+        contentPane.setPreferredSize(new Dimension(800, 200));
+        methodDefinerPanel.setPreferredSize(new Dimension(750, 150));
         methodScroll.setViewportView(methodDefinerPanel);
         methodScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         methodScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        methodScroll.setPreferredSize(new Dimension(600, 130));
+        methodScroll.setPreferredSize(new Dimension(750, 100));
+        methodScroll.setAlignmentX(JScrollPane.LEFT_ALIGNMENT);
         methodScroll.setEnabled(true);
-        if (SingletonClass.INSTANCE.getMethodsToAddComps() != null) {
+        if (ClassInputs.INSTANCE.getMethodsToAddComps() != null) {
             methodScroll.setPreferredSize(new Dimension(600, 130));
-            componentsToAdd = SingletonClass.INSTANCE.getMethodsToAddComps();
+            componentsToAdd = ClassInputs.INSTANCE.getMethodsToAddComps();
             for (int i = 0; i < componentsToAdd.size(); i++) {
                 methodAddition();
                 methodScroll.repaint();
@@ -87,7 +89,7 @@ public class Methods extends JDialog {
 
     private void onOK() {
         // add your code here
-        SingletonClass.INSTANCE.getMethods().clear();
+        ClassInputs.INSTANCE.getMethods().clear();
         for (int i = 0; i < componentsToAdd.size(); i++) {
             JComponent[] components = componentsToAdd.get(i);
             ArrayList<javax.lang.model.element.Modifier> modifiers = new ArrayList<>();
@@ -95,9 +97,18 @@ public class Methods extends JDialog {
             modifiers.add(modDropDown((ComboBox) components[2]));
             modifiers.add(modDropDown((ComboBox) components[3]));
             Class type = typeDropDown((ComboBox) components[4]);
-            MethodGen method = new MethodGen(methodInput.getText(), type, modifiers.get(0));
-            SingletonClass.INSTANCE.addMethods(method);
-            SingletonClass.INSTANCE.setMethodsToAddComps(componentsToAdd);
+            ArrayList<ParameterGen> parameterBank = ClassInputs.INSTANCE.getParameters();
+            ArrayList<ParameterGen> parametersToAdd = new ArrayList<>();
+            if(parameterBank!=null){
+                parameterBank.stream().filter(parameter -> parameter.getMethodName().equals(methodInput.getText())).forEach(
+                        parameter -> {
+                            parametersToAdd.add(parameter);
+                        }
+                );
+            }
+            MethodGen method = new MethodGen(methodInput.getText(), modifiers, type, parametersToAdd);
+            ClassInputs.INSTANCE.addMethods(method);
+            ClassInputs.INSTANCE.setMethodsToAddComps(componentsToAdd);
             panelIndex = 0;
             con.gridy = 1;
         }
@@ -107,7 +118,7 @@ public class Methods extends JDialog {
     private void onCancel() {
         // add your code here if necessary
 
-        SingletonClass.INSTANCE.setMethodsToAddComps(currentComponents);
+        ClassInputs.INSTANCE.setMethodsToAddComps(currentComponents);
         dispose();
     }
 
@@ -161,21 +172,34 @@ public class Methods extends JDialog {
     }
 
     private void addToComponentList() {
-        JComponent[] component = new JComponent[5];
-        JLabel fieldName = new JLabel("Field Name");
-        JTextField fieldNameInput = new JTextField();
-        fieldNameInput.setSize(new Dimension(200, 10));
+        JComponent[] component = new JComponent[6];
+        JLabel methodName = new JLabel("Method Name");
+        JTextField methodNameInput = new JTextField();
+        methodNameInput.setSize(new Dimension(200, 10));
         ComboBox encBox = new ComboBox();
         createEncapsulationBox(encBox);
         ComboBox typeBox = new ComboBox();
         createTypeBox(typeBox);
         ComboBox modBox = new ComboBox();
         modBox.addItem("static");
-        component[0] = fieldName;
-        component[1] = fieldNameInput;
+        JButton paramBtn = new JButton("Add Parameter");
+        paramBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!methodNameInput.getText().equals(null) || !methodNameInput.getText().equals("")){
+                    Parameters dialog = new Parameters(methodNameInput.getText());
+                    dialog.pack();
+                    dialog.setVisible(true);
+                }
+
+            }
+        });
+        component[0] = methodName;
+        component[1] = methodNameInput;
         component[2] = encBox;
         component[3] = modBox;
         component[4] = typeBox;
+        component[5] = paramBtn;
         this.componentsToAdd.add(component);
     }
 
@@ -183,7 +207,7 @@ public class Methods extends JDialog {
     public void addMethodRow(JPanel panel, GridBagConstraints con) {
         JPanel newPanel = new JPanel();
         JComponent[] components = componentsToAdd.get(panelIndex);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             newPanel.add(components[i]);
         }
         panel.add(newPanel, con);

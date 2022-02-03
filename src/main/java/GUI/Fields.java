@@ -1,6 +1,6 @@
 package GUI;
 
-import InputHolders.SingletonClass;
+import InputHolders.ClassInputs;
 import JavaPoetTemplates.FieldGen;
 import com.intellij.openapi.ui.ComboBox;
 
@@ -25,7 +25,7 @@ public class Fields extends JDialog {
     GridBagConstraints con = new GridBagConstraints();
 
     public Fields() {
-        currentComponents = SingletonClass.INSTANCE.getFieldsToAddComps();
+        currentComponents = ClassInputs.INSTANCE.getFieldsToAddComps();
         con.gridy=1;
         contentPane.setPreferredSize(new Dimension(650,200));
         fieldDefinerPanel.setPreferredSize(new Dimension(600,150));
@@ -34,9 +34,9 @@ public class Fields extends JDialog {
         fieldScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         fieldScroll.setPreferredSize(new Dimension(600,130));
         fieldScroll.setEnabled(true);
-        if(SingletonClass.INSTANCE.getFieldsToAddComps()!=null){
+        if(ClassInputs.INSTANCE.getFieldsToAddComps()!=null){
             fieldScroll.setPreferredSize(new Dimension(600,130));
-            componentsToAdd = SingletonClass.INSTANCE.getFieldsToAddComps();
+            componentsToAdd = ClassInputs.INSTANCE.getFieldsToAddComps();
             for(int i = 0; i < componentsToAdd.size(); i++){
                 fieldAddition();
                 fieldScroll.repaint();
@@ -88,7 +88,7 @@ public class Fields extends JDialog {
 
     private void onOK() {
         // add your code here
-        SingletonClass.INSTANCE.getField().clear();
+        //ClassInputs.INSTANCE.getField().clear();
         for(int i =0; i < componentsToAdd.size(); i++){
             JComponent[] components = componentsToAdd.get(i);
             ArrayList<javax.lang.model.element.Modifier> modifiers = new ArrayList<>();
@@ -97,8 +97,8 @@ public class Fields extends JDialog {
             modifiers.add(modDropDown((ComboBox) components[3]));
             Class type = typeDropDown((ComboBox) components[4]);
             FieldGen field = new FieldGen(type, fieldInput.getText(), modifiers);
-            SingletonClass.INSTANCE.addFields(field);
-            SingletonClass.INSTANCE.setFieldsToAddComps(componentsToAdd);
+            ClassInputs.INSTANCE.addFields(field);
+            ClassInputs.INSTANCE.setFieldsToAddComps(componentsToAdd);
             panelIndex=0;
             con.gridy=1;
         }
@@ -108,7 +108,7 @@ public class Fields extends JDialog {
     private void onCancel() {
         // add your code here if necessary
 
-        SingletonClass.INSTANCE.setFieldsToAddComps(currentComponents);
+        ClassInputs.INSTANCE.setFieldsToAddComps(currentComponents);
         dispose();
     }
 

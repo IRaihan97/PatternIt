@@ -1,9 +1,7 @@
 package GUI;
 
-import InputHolders.FieldsClass;
-import InputHolders.GeneratedClass;
-import InputHolders.SingletonClass;
-import com.intellij.openapi.ui.ComboBox;
+import InputHolders.ClassInputs;
+import lombok.Data;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -11,9 +9,8 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-
+@Data
 public class SingletonForm {
 //    private JTextField classNameInput;
 //    private JComboBox fieldDataTypeBox;
@@ -52,37 +49,39 @@ public class SingletonForm {
 
 
 
-        singletonName.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                SingletonClass.INSTANCE.setClassName(singletonName.getText());
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                SingletonClass.INSTANCE.setClassName(singletonName.getText());
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                SingletonClass.INSTANCE.setClassName(singletonName.getText());
-            }
-        });
+//        singletonName.getDocument().addDocumentListener(new DocumentListener() {
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                ClassInputs.INSTANCE.addClassName(singletonName.getText());
+//
+//            }
+//
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+//                ClassInputs.INSTANCE.addClassName(singletonName.getText());
+//            }
+//
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//                ClassInputs.INSTANCE.addClassName(singletonName.getText());
+//                System.out.println(singletonName.getText());
+//            }
+//        });
 
         packageName.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                SingletonClass.INSTANCE.setPackageName(packageName.getText());
+                ClassInputs.INSTANCE.setPackageName(packageName.getText());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                SingletonClass.INSTANCE.setPackageName(packageName.getText());
+                ClassInputs.INSTANCE.setPackageName(packageName.getText());
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                SingletonClass.INSTANCE.setPackageName(packageName.getText());
+                ClassInputs.INSTANCE.setPackageName(packageName.getText());
             }
         });
 

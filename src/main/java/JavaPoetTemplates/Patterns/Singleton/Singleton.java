@@ -1,6 +1,6 @@
 package JavaPoetTemplates.Patterns.Singleton;
 
-import InputHolders.SingletonClass;
+import InputHolders.ClassInputs;
 import JavaPoetTemplates.FieldGen;
 import JavaPoetTemplates.MethodGen;
 import com.squareup.javapoet.*;
@@ -21,7 +21,7 @@ public class Singleton {
     public Singleton(String className,
                      String singletonType, String packageName,
                      ArrayList<FieldGen> fields, ArrayList<MethodGen> methods) {
-        this.className = SingletonClass.capitalize(className);
+        this.className = ClassInputs.capitalize(className);
         this.objectName = className.substring(0,1).toLowerCase() + className.substring(1);
         this.singletonType = singletonType;
         this.packageName = packageName;
@@ -41,7 +41,7 @@ public class Singleton {
     public Singleton(String className,
                      String singletonType, String packageName)
     {
-        this.className = SingletonClass.capitalize(className);
+        this.className = ClassInputs.capitalize(className);
         this.objectName = className.substring(0,1).toLowerCase() + className.substring(1);
         this.singletonType = singletonType;
         this.packageName = packageName;
