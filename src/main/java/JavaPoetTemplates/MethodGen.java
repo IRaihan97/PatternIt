@@ -17,14 +17,18 @@ public class MethodGen {
     private ArrayList<String> statements;
     private Modifier singleModifier;
     private MethodSpec method;
+    private boolean isAbstract;
+    private String targetClass;
 
     public MethodGen(String methodName, ArrayList<Modifier> methodModifiers,
-                     Class methodType, ArrayList<ParameterGen> parameters)
+                     Class methodType, ArrayList<ParameterGen> parameters, boolean isAbstract, String targetClass)
     {
         this.methodName = methodName;
         this.methodModifiers = methodModifiers;
         this.methodType = methodType;
         this.parameters = parameters;
+        this.targetClass = targetClass;
+        this.isAbstract = isAbstract;
         this.method = generateMethod();
     }
 
@@ -50,7 +54,6 @@ public class MethodGen {
         MethodSpec.Builder methodBuilder = MethodSpec
                 .methodBuilder(methodName)
                 .returns(methodType);
-        methodBuilder.addComment("Add your Method Implementation Here");
         if(singleModifier!=null){
             methodBuilder.addModifiers(singleModifier);
         }
@@ -63,6 +66,13 @@ public class MethodGen {
                 methodBuilder.addParameter(parameters.get(i).getParameterGen());
             }
         }
+
+        if(isAbstract){
+            return methodBuilder.build();
+        }
+
+
+        methodBuilder.addComment("Add your Method Implementation Here");
         if(statements!=null){
             statements.forEach((statements) -> methodBuilder.addStatement(statements));
         }

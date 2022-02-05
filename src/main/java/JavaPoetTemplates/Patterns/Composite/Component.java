@@ -1,5 +1,6 @@
 package JavaPoetTemplates.Patterns.Composite;
 
+import JavaPoetTemplates.MethodGen;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
@@ -8,12 +9,12 @@ import java.util.ArrayList;
 
 public class Component {
     private String componentName;
-    private ArrayList<MethodSpec> commonMethods;
+    private ArrayList<MethodGen> commonMethods;
     private MethodSpec defaultMethod;
     private TypeSpec interfaceGen;
 
     public Component(){};
-    public Component(String componentName, ArrayList<MethodSpec> commonMethods) {
+    public Component(String componentName, ArrayList<MethodGen> commonMethods) {
         this.componentName = componentName;
         this.commonMethods = commonMethods;
         defaultMethod = MethodSpec.
@@ -28,7 +29,7 @@ public class Component {
                 .interfaceBuilder(componentName)
                 .addMethod(defaultMethod.toBuilder().addModifiers(Modifier.ABSTRACT).build());
         if(commonMethods != null){
-            commonMethods.forEach((method) -> componentBuilder.addMethod(method.toBuilder().addModifiers(Modifier.ABSTRACT).build()));
+            commonMethods.forEach((method) -> componentBuilder.addMethod(method.getMethod().toBuilder().addModifiers(Modifier.ABSTRACT).build()));
         }
 
 
@@ -38,7 +39,7 @@ public class Component {
     public String getComponentName(){
         return componentName;
     }
-    public ArrayList<MethodSpec> getCommonMethods() {
+    public ArrayList<MethodGen> getCommonMethods() {
         return commonMethods;
     }
     public MethodSpec getDefaultMethod() {
@@ -47,6 +48,7 @@ public class Component {
     public TypeSpec getInterfaceGen() {
         return interfaceGen;
     }
+
 
 
 }

@@ -23,9 +23,11 @@ public class Fields extends JDialog {
     private ArrayList<JComponent[]> currentComponents = new ArrayList<>();
     private int panelIndex = 0;
     GridBagConstraints con = new GridBagConstraints();
+    private String className;
 
-    public Fields() {
-        currentComponents = ClassInputs.INSTANCE.getFieldsToAddComps();
+    public Fields(String className) {
+        this.className = className;
+        //currentComponents = ClassInputs.INSTANCE.getFieldsToAddComps();
         con.gridy=1;
         contentPane.setPreferredSize(new Dimension(650,200));
         fieldDefinerPanel.setPreferredSize(new Dimension(600,150));
@@ -34,15 +36,15 @@ public class Fields extends JDialog {
         fieldScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         fieldScroll.setPreferredSize(new Dimension(600,130));
         fieldScroll.setEnabled(true);
-        if(ClassInputs.INSTANCE.getFieldsToAddComps()!=null){
-            fieldScroll.setPreferredSize(new Dimension(600,130));
-            componentsToAdd = ClassInputs.INSTANCE.getFieldsToAddComps();
-            for(int i = 0; i < componentsToAdd.size(); i++){
-                fieldAddition();
-                fieldScroll.repaint();
-                fieldScroll.revalidate();
-            }
-        }
+//        if(ClassInputs.INSTANCE.getFieldsToAddComps()!=null){
+//            fieldScroll.setPreferredSize(new Dimension(600,130));
+//            componentsToAdd = ClassInputs.INSTANCE.getFieldsToAddComps();
+//            for(int i = 0; i < componentsToAdd.size(); i++){
+//                fieldAddition();
+//                fieldScroll.repaint();
+//                fieldScroll.revalidate();
+//            }
+//        }
         contentPane.revalidate();
         setContentPane(contentPane);
         setModal(true);
@@ -96,7 +98,7 @@ public class Fields extends JDialog {
             modifiers.add(modDropDown((ComboBox) components[2]));
             modifiers.add(modDropDown((ComboBox) components[3]));
             Class type = typeDropDown((ComboBox) components[4]);
-            FieldGen field = new FieldGen(type, fieldInput.getText(), modifiers);
+            FieldGen field = new FieldGen(type, fieldInput.getText(), modifiers, className);
             ClassInputs.INSTANCE.addFields(field);
             ClassInputs.INSTANCE.setFieldsToAddComps(componentsToAdd);
             panelIndex=0;

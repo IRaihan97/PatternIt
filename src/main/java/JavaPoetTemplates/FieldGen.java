@@ -7,22 +7,26 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 import com.thaiopensource.relaxng.edit.Param;
+import lombok.Data;
 
 import javax.lang.model.element.Modifier;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+@Data
 public class FieldGen {
     private String fieldName;
     private Class fieldType;
     private ArrayList<Modifier> fieldModifiers;
     private FieldSpec field;
+    private String targetClass;
     private ParameterSpec derivedParameter;
 
-    public FieldGen(Class fieldType, String fieldName, ArrayList<Modifier> fieldModifiers){
+    public FieldGen(Class fieldType, String fieldName, ArrayList<Modifier> fieldModifiers, String targetClass){
         this.fieldType = fieldType;
         this.fieldName = fieldName;
         this.fieldModifiers = fieldModifiers;
+        this.targetClass = targetClass;
         this.field = generateField();
         this.derivedParameter = generateParameterFromFields();
     }

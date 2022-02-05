@@ -67,6 +67,10 @@ public class ClassInputs {
         return classGen;
     }
 
+    public static void addClassGen(TypeSpec classToAdd){
+        classGen.add(classToAdd);
+    }
+
     public static void setClassGen(ArrayList<TypeSpec> classGen) {
         ClassInputs.classGen = classGen;
     }

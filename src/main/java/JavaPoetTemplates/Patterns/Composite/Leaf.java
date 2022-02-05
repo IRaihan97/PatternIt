@@ -1,6 +1,7 @@
 package JavaPoetTemplates.Patterns.Composite;
 
 import JavaPoetTemplates.FieldGen;
+import JavaPoetTemplates.MethodGen;
 import com.squareup.javapoet.*;
 
 import javax.lang.model.element.Modifier;
@@ -11,11 +12,11 @@ public class Leaf {
     private Component componentClass;
     private String leafObjName;
     private ArrayList<FieldGen> fieldGenToAdd;
-    private ArrayList<MethodSpec> methodsToAdd;
+    private ArrayList<MethodGen> methodsToAdd;
     private ClassName componentType;
     private TypeSpec leafGen;
 
-    public Leaf(Component componentClass, String leafObjName, String packageName, ArrayList<FieldGen> fieldGenToAdd, ArrayList<MethodSpec> methodsToAdd) {
+    public Leaf(Component componentClass, String leafObjName, String packageName, ArrayList<FieldGen> fieldGenToAdd, ArrayList<MethodGen> methodsToAdd) {
         this.componentName = componentClass.getComponentName();
         this.componentClass = componentClass;
         this.leafObjName = leafObjName;
@@ -43,8 +44,10 @@ public class Leaf {
                 .addSuperinterface(componentType)
                 .addMethod(componentClass.getDefaultMethod().toBuilder()
                         .addAnnotation(Override.class).build());
+        methodsToAdd.forEach((method) -> leafBuilder.addMethod(method.getMethod()));
         componentClass.getCommonMethods().forEach((methods) ->
-                leafBuilder.addMethod(methods.toBuilder().addAnnotation(Override.class).build()));
+                leafBuilder.addMethod(methods.getMethod().toBuilder().addAnnotation(Override.class).build()));
+
         return leafBuilder.build();
     }
 

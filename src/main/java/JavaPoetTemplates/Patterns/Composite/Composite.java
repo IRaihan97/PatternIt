@@ -5,7 +5,7 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.util.Locale;
 
-public class Composite {
+public class Composite{
     private String componentInterface;
     private Component componentClass;
     private String compositeObjName;
@@ -56,12 +56,13 @@ public class Composite {
                 .addMethod(componentClass.getDefaultMethod().toBuilder()
                         .addAnnotation(Override.class).build());
             componentClass.getCommonMethods().forEach((methods) ->
-                    compositeBuilder.addMethod(methods.toBuilder().addAnnotation(Override.class).build()));
+                    compositeBuilder.addMethod(methods.getMethod().toBuilder().addAnnotation(Override.class).build()));
 
 
         return compositeBuilder.build();
 
     }
+
 
     public TypeSpec getCompositeGen() {
         return compositeGen;

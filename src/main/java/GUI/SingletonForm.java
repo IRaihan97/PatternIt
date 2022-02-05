@@ -30,7 +30,7 @@ public class SingletonForm {
         addFieldBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Fields dialog = new Fields();
+                Fields dialog = new Fields("");
                 dialog.pack();
                 dialog.setLocationRelativeTo(null);
                 dialog.setVisible(true);
@@ -40,7 +40,7 @@ public class SingletonForm {
         addMethodBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Methods dialog = new Methods();
+                Methods dialog = new Methods("", false);
                 dialog.pack();
                 dialog.setLocationRelativeTo(null);
                 dialog.setVisible(true);

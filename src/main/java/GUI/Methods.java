@@ -24,9 +24,13 @@ public class Methods extends JDialog {
     private ArrayList<JComponent[]> currentComponents;
     private int panelIndex = 0;
     GridBagConstraints con = new GridBagConstraints();
+    private String className;
+    private boolean isAbstract;
 
-    public Methods() {
-        currentComponents = ClassInputs.INSTANCE.getMethodsToAddComps();
+    public Methods(String className, boolean isAbstract) {
+        this.className = className;
+        this.isAbstract = isAbstract;
+        //currentComponents = ClassInputs.INSTANCE.getMethodsToAddComps();
         con.gridy = 1;
         contentPane.setPreferredSize(new Dimension(800, 200));
         methodDefinerPanel.setPreferredSize(new Dimension(750, 150));
@@ -36,15 +40,15 @@ public class Methods extends JDialog {
         methodScroll.setPreferredSize(new Dimension(750, 100));
         methodScroll.setAlignmentX(JScrollPane.LEFT_ALIGNMENT);
         methodScroll.setEnabled(true);
-        if (ClassInputs.INSTANCE.getMethodsToAddComps() != null) {
-            methodScroll.setPreferredSize(new Dimension(600, 130));
-            componentsToAdd = ClassInputs.INSTANCE.getMethodsToAddComps();
-            for (int i = 0; i < componentsToAdd.size(); i++) {
-                methodAddition();
-                methodScroll.repaint();
-                methodScroll.revalidate();
-            }
-        }
+//        if (ClassInputs.INSTANCE.getMethodsToAddComps() != null) {
+//            methodScroll.setPreferredSize(new Dimension(600, 130));
+//            componentsToAdd = ClassInputs.INSTANCE.getMethodsToAddComps();
+//            for (int i = 0; i < componentsToAdd.size(); i++) {
+//                methodAddition();
+//                methodScroll.repaint();
+//                methodScroll.revalidate();
+//            }
+//        }
         contentPane.revalidate();
         setContentPane(contentPane);
         setModal(true);
@@ -89,24 +93,27 @@ public class Methods extends JDialog {
 
     private void onOK() {
         // add your code here
-        ClassInputs.INSTANCE.getMethods().clear();
+        //ClassInputs.INSTANCE.getMethods().clear();
         for (int i = 0; i < componentsToAdd.size(); i++) {
             JComponent[] components = componentsToAdd.get(i);
             ArrayList<javax.lang.model.element.Modifier> modifiers = new ArrayList<>();
             JTextField methodInput = (JTextField) components[1];
             modifiers.add(modDropDown((ComboBox) components[2]));
-            modifiers.add(modDropDown((ComboBox) components[3]));
+            if(!isAbstract){
+                modifiers.add(modDropDown((ComboBox) components[3]));
+            }
+
             Class type = typeDropDown((ComboBox) components[4]);
             ArrayList<ParameterGen> parameterBank = ClassInputs.INSTANCE.getParameters();
             ArrayList<ParameterGen> parametersToAdd = new ArrayList<>();
             if(parameterBank!=null){
-                parameterBank.stream().filter(parameter -> parameter.getMethodName().equals(methodInput.getText())).forEach(
+                parameterBank.stream().filter(parameter -> parameter.getTargetMethod().equals(methodInput.getText())).forEach(
                         parameter -> {
                             parametersToAdd.add(parameter);
                         }
                 );
             }
-            MethodGen method = new MethodGen(methodInput.getText(), modifiers, type, parametersToAdd);
+            MethodGen method = new MethodGen(methodInput.getText(), modifiers, type, parametersToAdd, isAbstract, className);
             ClassInputs.INSTANCE.addMethods(method);
             ClassInputs.INSTANCE.setMethodsToAddComps(componentsToAdd);
             panelIndex = 0;
@@ -204,7 +211,7 @@ public class Methods extends JDialog {
     }
 
 
-    public void addMethodRow(JPanel panel, GridBagConstraints con) {
+    private void addMethodRow(JPanel panel, GridBagConstraints con) {
         JPanel newPanel = new JPanel();
         JComponent[] components = componentsToAdd.get(panelIndex);
         for (int i = 0; i < 6; i++) {

@@ -7,7 +7,7 @@ import lombok.Data;
 public class ParameterGen {
     private String parameterName;
     private Class parameterType;
-    private String methodName;
+    private String targetMethod;
     private ParameterSpec parameterGen;
 
 
@@ -17,10 +17,10 @@ public class ParameterGen {
         this.parameterGen = generateParameter();
     }
 
-    public ParameterGen(String parameterName, Class parameterType, String methodName) {
+    public ParameterGen(String parameterName, Class parameterType, String targetMethod) {
         this.parameterName = parameterName;
         this.parameterType = parameterType;
-        this.methodName = methodName;
+        this.targetMethod = targetMethod;
         this.parameterGen = generateParameter();
     }
 
