@@ -2,6 +2,7 @@ package JavaPoetTemplates.Patterns.Template;
 
 import JavaPoetTemplates.FieldGen;
 import JavaPoetTemplates.MethodGen;
+import JavaPoetTemplates.ParameterGen;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -9,14 +10,14 @@ import com.squareup.javapoet.TypeSpec;
 import javax.lang.model.element.Modifier;
 import java.util.ArrayList;
 
-public class Abstract {
+public class AbstractTemplate {
     private String absClassName;
     private ArrayList<FieldGen> fieldGenToAdd;
     private ArrayList<MethodGen> methodGenToAdd;
     private ClassName componentType;
     private TypeSpec absClassGen;
 
-    public Abstract(String absClassName, String packageName, ArrayList<FieldGen> fieldGenToAdd, ArrayList<MethodGen> methodGenToAdd) {
+    public AbstractTemplate(String absClassName, String packageName, ArrayList<FieldGen> fieldGenToAdd, ArrayList<MethodGen> methodGenToAdd) {
         this.absClassName = absClassName;
         this.fieldGenToAdd = fieldGenToAdd;
         this.methodGenToAdd = methodGenToAdd;
@@ -33,13 +34,45 @@ public class Abstract {
         }
         if(methodGenToAdd !=null){
 
-            methodGenToAdd.forEach((method) -> absClassBuilder.addMethod(method.getMethod()));
+            methodGenToAdd.forEach((method) -> absClassBuilder.addMethod(method.getMethod().toBuilder().addModifiers(Modifier.ABSTRACT).build()));
         }
         MethodSpec.Builder finalMethod = MethodSpec
-                .methodBuilder("protectedMethodExample")
+                .methodBuilder("templateMethodExample")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addComment("This is a generic definition for the final method")
                 .addComment("You can apply your own method definition here");
+//        String aurgumentsToAdd = "";
+//        for(int i = 0; i < methodGenToAdd.size(); i++){
+//            if(methodGenToAdd.get(i).getParameters()!=null){
+//                for(int j = 0; j < methodGenToAdd.get(i).getParameters().size(); i++){
+//                    Class parameterType = methodGenToAdd.get(i).getParameters().get(j).getParameterType();
+//                    if(parameterType== int.class
+//                            || parameterType == double.class
+//                            || parameterType == long.class
+//                            || parameterType == short.class
+//                            || parameterType == float.class
+//                    ){
+//                        if(j == methodGenToAdd.get(i).getParameters().size()-1){
+//                            aurgumentsToAdd+="0)";
+//                        }
+//                        else{
+//                            aurgumentsToAdd+="0,";
+//                        }
+//                    }
+//                    else{
+//                        if(j == methodGenToAdd.get(i).getParameters().size()-1){
+//                            aurgumentsToAdd+="null)";
+//                        }
+//                        else{
+//                            aurgumentsToAdd+="null,";
+//                        }
+//                    }
+//                }
+//            }
+//
+//
+//        }
+//        System.out.println(aurgumentsToAdd);
         methodGenToAdd.forEach((method) -> finalMethod.addStatement("$L()", method.getMethodName()));
         absClassBuilder.addMethod(finalMethod.build());
 

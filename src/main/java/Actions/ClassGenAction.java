@@ -1,16 +1,9 @@
 package Actions;
 
-import GUI.CompositeDialogWrapper;
+import GUI.CompositeGenDialogWrapper;
 import GUI.SingletonGenDialogWrapper;
+import GUI.TemplateGenDialogWrapper;
 import InputHolders.ClassInputs;
-import JavaPoetTemplates.FieldGen;
-import JavaPoetTemplates.MethodGen;
-import JavaPoetTemplates.Patterns.Composite.Component;
-import JavaPoetTemplates.Patterns.Composite.Composite;
-import JavaPoetTemplates.Patterns.Composite.Leaf;
-import JavaPoetTemplates.Patterns.Template.Abstract;
-import JavaPoetTemplates.Patterns.Template.Concrete;
-import InputHolders.GeneratedClass;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -18,11 +11,8 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import org.jsoup.select.Evaluator;
 
-import javax.lang.model.element.Modifier;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -151,8 +141,13 @@ public class ClassGenAction extends AnAction {
         ClassInputs.INSTANCE.setPatternToGenerate(action);
 
         if(action.equals("Composite")){
-            CompositeDialogWrapper compositeUI = new CompositeDialogWrapper(anActionEvent.getProject());
+            CompositeGenDialogWrapper compositeUI = new CompositeGenDialogWrapper(anActionEvent.getProject());
             compositeUI.show();
+        }
+
+        else if(action.equals("Template")){
+            TemplateGenDialogWrapper templateUI = new TemplateGenDialogWrapper(anActionEvent.getProject());
+            templateUI.show();
         }
 
         else{

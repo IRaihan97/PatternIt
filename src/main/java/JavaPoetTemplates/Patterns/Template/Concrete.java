@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 public class Concrete {
     private String concreteName;
-    private Abstract templateClass;
+    private AbstractTemplate templateClass;
     private TypeSpec concreteGen;
     private ArrayList<MethodGen> methodGenToAdd;
     private ArrayList<FieldGen> fieldGenToAdd;
 
-    public Concrete(String concreteName, Abstract templateClass) {
+    public Concrete(String concreteName, AbstractTemplate templateClass) {
         this.concreteName = concreteName;
         this.templateClass = templateClass;
         this.concreteGen = generateConcreteClass();

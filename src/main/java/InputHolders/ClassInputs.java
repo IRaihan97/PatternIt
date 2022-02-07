@@ -86,6 +86,7 @@ public class ClassInputs {
         parameters.clear();
         fieldsToAddComps.clear();
         methodsToAddComps.clear();
+        classGen.clear();
     }
 
 }
