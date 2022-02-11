@@ -72,22 +72,22 @@ public class MethodGen {
         }
 
 
-        methodBuilder.addComment("Add your Method Implementation Here");
+        methodBuilder.addComment("TODO - your Method Implementation Here");
         if(statements!=null){
             statements.forEach((statements) -> methodBuilder.addStatement(statements));
         }
 
-        if(methodType== int.class
-                || methodType == double.class
-                || methodType == long.class
-                || methodType == short.class
-                || methodType == float.class
-        ){
-            methodBuilder.addStatement("return 0");
-        }
-        else{
-            methodBuilder.addStatement("return null");
-        }
+//        if(methodType== int.class
+//                || methodType == double.class
+//                || methodType == long.class
+//                || methodType == short.class
+//                || methodType == float.class
+//        ){
+//            methodBuilder.addStatement("return 0");
+//        }
+//        else{
+//            methodBuilder.addStatement("return null");
+//        }
 
         return methodBuilder.build();
     }

@@ -1,6 +1,6 @@
 <idea-plugin>
-    <id>org.example.Plugin</id>
-    <name>Islam Raihan</name>
+    <id>org.brunel.ac.uk.PatternIt</id>
+    <name>PatternIt!</name>
     <vendor email="1820557@brunel.ac.uk" url="brunel.ac.uk"></vendor>
     <depends>com.intellij.modules.java</depends>
 
