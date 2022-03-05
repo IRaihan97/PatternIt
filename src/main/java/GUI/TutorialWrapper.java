@@ -21,6 +21,10 @@ public class TutorialWrapper extends DialogWrapper {
     }
     //https://ayusch.com/intellij-plugin-development-tutorial-handling-user-input/
 
+    @Override
+    protected JComponent createSouthPanel(){
+        return null;
+    }
 
     @Nullable
     @Override

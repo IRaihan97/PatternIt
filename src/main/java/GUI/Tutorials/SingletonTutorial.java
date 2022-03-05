@@ -16,8 +16,6 @@ public class SingletonTutorial extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private final Logger log = LoggerFactory.getLogger(SingletonTutorial.class);
-    WizardModel model;
-    WizardController controller;
 
     public SingletonTutorial() {
         final WizardContainer wc = new WizardContainer(
@@ -51,17 +49,17 @@ public class SingletonTutorial extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+//        buttonOK.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                onOK();
+//            }
+//        });
+//
+//        buttonCancel.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                onCancel();
+//            }
+//        });
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -100,28 +98,50 @@ public class SingletonTutorial extends JDialog {
 
         // To keep things simple, we'll just create an array of wizard pages:
         private final WizardPage[] pages = {
-                new WizardPage("One", "First Page") {
+                new WizardPage("What is Singleton", "What is Singleton") {
                     // this is an instance initializer -- it's a constructor for
                     // an anonymous class.  WizardPages don't need to be anonymous,
                     // of course.  It just makes the demo fit in one file if we do it
                     // this way:
                     {
-                        JTextField field = new JTextField();
+                        JTextArea text = new JTextArea(
+                                "Singleton pattern is a design pattern which restricts a \n class to instantiate its multiple objects." +
+                                "\n It is nothing but a way of defining a class. " +
+                                "\n Class is defined in such a way that only one instance of \n the class is created in the complete execution of a program or project. " +
+                                "\n It is used where only a single instance of a class is required \n to control the action throughout the execution. " +
+                                "\n A singleton class shouldn’t have multiple instances in any case and at any cost." +
+                                "\n Singleton classes are used for logging, driver objects,\n caching and thread pool, database connections.");
                         // set a name on any component that you want to collect values
                         // from.  Be sure to do this *before* adding the component to
                         // the WizardPage.
-                        field.setName("testField");
-                        field.setPreferredSize(new Dimension(50, 20));
-                        add(new JLabel("One!"));
-                        add(field);
+
+                        add(text);
+
+
                     }
                 },
-                new WizardPage("Two", "Second Page") {
+                new WizardPage("Common Uses", "Second Page") {
                     {
-                        JCheckBox box = new JCheckBox("testBox");
-                        box.setName("box");
-                        add(new JLabel("Two!"));
-                        add(box);
+                        JTextArea text1 = new JTextArea("Hardware interface access: The use of singleton depends on the \n" +
+                                "requirements. Singleton classes are also used to prevent concurrent access of class. \n" +
+                                "Practically singleton can be used in case external hardware resource usage limitation required\n" +
+                                "e.g. Hardware printers where the print spooler can be made a\n" +
+                                "singleton to avoid multiple concurrent accesses and creating deadlock"
+                        );
+                        JTextArea text2 = new JTextArea("Logger : Singleton classes are used in log file generations. \n" +
+                                "Log files are created by the logger class object. \n" +
+                                "Suppose an application where the logging utility has to produce one log file\n" +
+                                "based on the messages received from the users. \n" +
+                                "If there is multiple client application using this \n" +
+                                "logging utility class they might create multiple instances \n" +
+                                "of this class and it can potentially cause issues during concurrent \n" +
+                                "access to the same logger file. We can use the logger utility class\n" +
+                                "as a singleton and provide a global point of reference \n" +
+                                "so that each user can use this utility and no 2 users access it at the same time."
+                        );
+                        text2.setLayout(new BoxLayout(text1, BoxLayout.Y_AXIS));
+                        add(text1);
+                        add(text2);
                     }
 
                     /* (non-Javadoc)
