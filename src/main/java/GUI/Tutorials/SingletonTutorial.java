@@ -139,7 +139,6 @@ public class SingletonTutorial extends JDialog {
                                 "as a singleton and provide a global point of reference \n" +
                                 "so that each user can use this utility and no 2 users access it at the same time."
                         );
-                        text2.setLayout(new BoxLayout(text1, BoxLayout.Y_AXIS));
                         add(text1);
                         add(text2);
                     }
