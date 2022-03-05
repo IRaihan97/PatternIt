@@ -8,7 +8,11 @@ version 'Alpha'
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://repos.lobosstudios.com/repository/java-dev/"
+    }
 }
+
 
 dependencies {
     implementation 'org.projectlombok:lombok:1.18.20'
@@ -17,6 +21,9 @@ dependencies {
     implementation 'com.squareup:javapoet:1.13.0'
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    implementation ('com.github.cjwizard:cjwizard:1.0.9.1'){
+        exclude group: 'org.slf4j'
+    }
 
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
@@ -35,3 +42,4 @@ patchPluginXml {
 test {
     useJUnitPlatform()
 }
+
