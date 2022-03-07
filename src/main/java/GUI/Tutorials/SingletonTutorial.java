@@ -51,7 +51,7 @@ public class SingletonTutorial extends JFrame {
             }
         });
         setContentPane(contentPane);
-        //setModal(true);
+        //7setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
 //        buttonOK.addActionListener(new ActionListener() {

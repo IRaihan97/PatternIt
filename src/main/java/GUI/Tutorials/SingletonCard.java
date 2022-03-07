@@ -10,19 +10,26 @@ public class SingletonCard extends JDialog {
     private JButton buttonCancel;
     private CardLayout pageCards = new CardLayout();
     private JPanel pages;
-    private int n = 2;
+    private int n = 0;
+    private int lastPaneidx;
 
     public SingletonCard() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         pages.setLayout(pageCards);
-        JPanel newP = new JPanel();
-        newP.add(new JLabel("P1"));
-        JPanel newP1 = new JPanel();
-        newP1.add(new JLabel("P2"));
-        pages.add(newP, "1");
-        pages.add(newP1, "2");
+//        JPanel newP = new JPanel();
+//        newP.add(new JLabel("P1"));
+//        JPanel newP1 = new JPanel();
+//        newP1.add(new JLabel("P2"));
+//        pages.add(newP, "1");
+//        pages.add(newP1, "2");
+        SingletonCards cards = new SingletonCards(contentPane);
+        JPanel[] cardstoAdd = cards.getCards();
+        lastPaneidx = cardstoAdd.length-1;
+        for (int i = 0; i < cardstoAdd.length; i++){
+            pages.add(cardstoAdd[i], Integer.toString(i));
+        }
 
 
 
@@ -33,13 +40,13 @@ public class SingletonCard extends JDialog {
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                next();
             }
         });
 
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onCancel();
+                previous();
             }
         });
 
@@ -47,29 +54,38 @@ public class SingletonCard extends JDialog {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                onCancel();
+                previous();
             }
         });
 
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onCancel();
+                previous();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    private void onOK() {
+    private void next() {
         // add your code here
-
-        pageCards.show(pages, Integer.toString(n));
+        System.out.println(lastPaneidx);
+        System.out.println(lastPaneidx);
         n++;
+        pageCards.show(pages, Integer.toString(n));
+        if(n >= lastPaneidx){
+            n = lastPaneidx;
+        }
+
         //dispose();
     }
 
-    private void onCancel() {
-        // add your code here if necessary
-        dispose();
+    private void previous() {
+        if(n==0){
+            return;
+        }
+        n--;
+        pageCards.show(pages, Integer.toString(n));
+        //dispose();
     }
 
     public JPanel getContent(){

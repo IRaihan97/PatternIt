@@ -16,8 +16,6 @@ public class TutorialWrapper extends DialogWrapper {
         super(project);
         singletonForm = new SingletonCard();
         init();
-
-        setResizable(false);
         setTitle("Singleton Generator");
     }
     //https://ayusch.com/intellij-plugin-development-tutorial-handling-user-input/
