@@ -8,6 +8,7 @@ import java.util.List;
 import com.github.cjwizard.*;
 import com.github.cjwizard.pagetemplates.TitledPageTemplate;
 import com.intellij.ui.wizard.WizardModel;
+import net.miginfocom.layout.Grid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,13 +123,19 @@ public class SingletonTutorial extends JDialog {
                 },
                 new WizardPage("Common Uses", "Second Page") {
                     {
-                        JTextArea text1 = new JTextArea("Hardware interface access: The use of singleton depends on the \n" +
-                                "requirements. Singleton classes are also used to prevent concurrent access of class. \n" +
-                                "Practically singleton can be used in case external hardware resource usage limitation required\n" +
-                                "e.g. Hardware printers where the print spooler can be made a\n" +
+                        setLayout(new GridBagLayout());
+                        GridBagConstraints con = new GridBagConstraints();
+                        Dimension size = new Dimension(200, 200);
+                        con.gridy = 1;
+                        JTextArea text1 = new JTextArea(
+                                "Hardware interface access: The use of singleton depends on the \n" +
+                                "requirements. Singleton classes are also used to prevent concurrent access of class.\n" +
+                                "Practically singleton can be used in case external hardware resource usage\n" +
+                                        "limitation required e.g. Hardware printers where the print spooler can be made a\n" +
                                 "singleton to avoid multiple concurrent accesses and creating deadlock"
                         );
-                        JTextArea text2 = new JTextArea("Logger : Singleton classes are used in log file generations. \n" +
+                        JTextArea text2 = new JTextArea(
+                                "Logger : Singleton classes are used in log file generations. \n" +
                                 "Log files are created by the logger class object. \n" +
                                 "Suppose an application where the logging utility has to produce one log file\n" +
                                 "based on the messages received from the users. \n" +
@@ -139,8 +146,11 @@ public class SingletonTutorial extends JDialog {
                                 "as a singleton and provide a global point of reference \n" +
                                 "so that each user can use this utility and no 2 users access it at the same time."
                         );
+
                         add(text1);
-                        add(text2);
+
+                        add(new JSeparator());
+                        add(text2, con);
                     }
 
                     /* (non-Javadoc)
