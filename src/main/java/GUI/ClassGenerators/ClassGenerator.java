@@ -1,4 +1,4 @@
-package GUI;
+package GUI.ClassGenerators;
 
 import InputHolders.GeneratedClass;
 

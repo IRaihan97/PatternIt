@@ -1,4 +1,4 @@
-package GUI;
+package GUI.ClassGenerators;
 
 import InputHolders.ClassInputs;
 import com.intellij.openapi.project.Project;

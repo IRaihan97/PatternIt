@@ -1,10 +1,8 @@
 package Actions;
 
-import GUI.CompositeGenDialogWrapper;
-import GUI.SingletonGenDialogWrapper;
-import GUI.TemplateGenDialogWrapper;
-import GUI.TutorialWrapper;
-import GUI.Tutorials.SingletonTutorial;
+import GUI.ClassGenerators.SingletonGenDialogWrapper;
+import GUI.ClassGenerators.TemplateGenDialogWrapper;
+import GUI.Tutorials.TutorialWrapper;
 import InputHolders.ClassInputs;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -44,6 +42,7 @@ public class ClassGenAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
+
         String selectedPath = selectedDir.toString();
         String outputPath = selectedPath.toString();
         File outPut = new File(outputPath.substring(13));

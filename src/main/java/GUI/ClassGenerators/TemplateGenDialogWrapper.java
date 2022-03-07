@@ -1,11 +1,8 @@
-package GUI;
+package GUI.ClassGenerators;
 
 import InputHolders.ClassInputs;
 import JavaPoetTemplates.FieldGen;
 import JavaPoetTemplates.MethodGen;
-import JavaPoetTemplates.Patterns.Composite.Component;
-import JavaPoetTemplates.Patterns.Composite.Composite;
-import JavaPoetTemplates.Patterns.Composite.Leaf;
 import JavaPoetTemplates.Patterns.Template.AbstractTemplate;
 import JavaPoetTemplates.Patterns.Template.Concrete;
 import com.intellij.openapi.project.Project;

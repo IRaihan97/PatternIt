@@ -12,13 +12,17 @@ import net.miginfocom.layout.Grid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SingletonTutorial extends JDialog {
+public class SingletonTutorial extends JFrame {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private final Logger log = LoggerFactory.getLogger(SingletonTutorial.class);
 
     public SingletonTutorial() {
+//        contentPane.setPreferredSize(new Dimension(500,500));
+//        contentPane.setMaximumSize(new Dimension(500,500));
+//        contentPane.setMinimumSize(new Dimension(500,500));
+        this.setResizable(false);
         final WizardContainer wc = new WizardContainer(
             new TestFactory(), new TitledPageTemplate(), new StackWizardSettings()
         );
@@ -47,7 +51,7 @@ public class SingletonTutorial extends JDialog {
             }
         });
         setContentPane(contentPane);
-        setModal(true);
+        //setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
 //        buttonOK.addActionListener(new ActionListener() {
@@ -108,22 +112,24 @@ public class SingletonTutorial extends JDialog {
                         JTextArea text = new JTextArea(
                                 "Singleton pattern is a design pattern which restricts a \n class to instantiate its multiple objects." +
                                 "\n It is nothing but a way of defining a class. " +
-                                "\n Class is defined in such a way that only one instance of \n the class is created in the complete execution of a program or project. " +
+                                "\n Class is defined in such a way that only one instance of \n the class is created in the complete\n execution of a program or project. " +
                                 "\n It is used where only a single instance of a class is required \n to control the action throughout the execution. " +
-                                "\n A singleton class shouldn’t have multiple instances in any case and at any cost." +
+                                "\n A singleton class shouldn't have multiple instances in any case and at any cost." +
                                 "\n Singleton classes are used for logging, driver objects,\n caching and thread pool, database connections.");
                         // set a name on any component that you want to collect values
                         // from.  Be sure to do this *before* adding the component to
                         // the WizardPage.
 
                         add(text);
+                        setCancelEnabled(false);
+                        setFinishEnabled(false);
 
 
                     }
                 },
                 new WizardPage("Common Uses", "Second Page") {
                     {
-                        setLayout(new GridBagLayout());
+                        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
                         GridBagConstraints con = new GridBagConstraints();
                         Dimension size = new Dimension(200, 200);
                         con.gridy = 1;
@@ -146,11 +152,27 @@ public class SingletonTutorial extends JDialog {
                                 "as a singleton and provide a global point of reference \n" +
                                 "so that each user can use this utility and no 2 users access it at the same time."
                         );
+                        JTextArea text3 = new JTextArea(
+                                "Configuration File: This is another potential candidate\n" +
+                                "for Singleton pattern because this has a performance benefit as\n" +
+                                "it prevents multiple users to repeatedly access and read the configuration file\n" +
+                                "or properties file. It creates a single instance of the configuration file\n" +
+                                "which can be accessed by multiple calls concurrently as it will provide " +
+                                "static config data loaded into in-memory objects.\n" +
+                                "The application only reads from the configuration file\n" +
+                                "for the first time and thereafter from second call onwards\n" +
+                                "the client applications read the data from in-memory objects."
+                        );
 
                         add(text1);
+                        add(Box.createRigidArea(new Dimension(5,10)));
+                        add(text2);
+                        add(Box.createRigidArea(new Dimension(5,10)));
+                        add(text3);
+                        setCancelEnabled(false);
+                        setFinishEnabled(false);
 
-                        add(new JSeparator());
-                        add(text2, con);
+
                     }
 
                     /* (non-Javadoc)
@@ -175,6 +197,8 @@ public class SingletonTutorial extends JDialog {
                     {
                         add(new JLabel("Three!"));
                         setBackground(Color.green);
+                        setCancelEnabled(false);
+                        setFinishEnabled(false);
                     }
 
                     /**
@@ -184,7 +208,6 @@ public class SingletonTutorial extends JDialog {
                      */
                     public void rendering(List<WizardPage> path, WizardSettings settings) {
                         super.rendering(path, settings);
-                        setFinishEnabled(true);
                         setNextEnabled(false);
                     }
                 }
