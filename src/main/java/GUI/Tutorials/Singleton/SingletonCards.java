@@ -9,14 +9,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class SingletonCards {
-    JPanel[] cards = new JPanel[2];
+    ArrayList<JPanel> cards = new ArrayList<>();
     JPanel parentContainer;
     SingletonCards(){
         singletonPage1();
         singletonPage2();
 
     }
-    public JPanel[] getCards(){
+    public ArrayList<JPanel> getCards(){
         return cards;
     }
 
@@ -41,7 +41,7 @@ public class SingletonCards {
         page.add(Box.createRigidArea(new Dimension(5,10)));
         page.add(text1);
         page.add(Box.createRigidArea(new Dimension(5,10)));
-        cards[0] = page;
+        cards.add(page);
     }
     private void singletonPage2(){
         JPanel page = new JPanel();
@@ -51,63 +51,35 @@ public class SingletonCards {
         JButton hwInterfaceBtn = new JButton("Hardware Interfaces");
         JButton loggerBtn = new JButton("Loggers");
         JButton configBtn = new JButton("Config Files");
+        JButton cacheBtn = new JButton("Cache");
         hwInterfaceBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ArrayList<JPanel> panels = new ArrayList();
+                JTextArea text = new JTextArea("The use of singleton depends on the\n" +
+                        "requirements. Singleton classes are also used to prevent concurrent access of class.\n" +
+                        "Practically singleton can be used in case external hardware resource usage\n" +
+                        "limitation required e.g. Hardware printers where the print spooler can be made a\n" +
+                        "singleton to avoid multiple concurrent accesses and creating deadlock");
+                text.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-
-                JPanel panel1 = new JPanel();
-                JLabel label1 = new JLabel("Hardware Interfaces");
-                label1.setAlignmentX(Component.LEFT_ALIGNMENT);
-                panel1.add(label1);
-                panel1.add(Box.createRigidArea(new Dimension(5,10)));
-                panel1.setLayout(new BoxLayout(panel1, BoxLayout.PAGE_AXIS));
-//                panel1.add(new JTextArea("The use of singleton depends on the\n" +
-//                        "requirements. Singleton classes are also used to prevent concurrent access of class.\n" +
-//                        "Practically singleton can be used in case external hardware resource usage\n" +
-//                        "limitation required e.g. Hardware printers where the print spooler can be made a\n" +
-//                        "singleton to avoid multiple concurrent accesses and creating deadlock"));
-                panels.add(panel1);
-
-
-                JPanel panel2 = new JPanel();
-                panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
-                JLabel label = new JLabel("Logger");
-                label.setAlignmentX(Component.LEFT_ALIGNMENT);
-                panel2.add(label);
-                panel2.add(Box.createRigidArea(new Dimension(5,10)));
-                panel2.add(new JTextArea("Singleton classes are used in log file generations.\n" +
-                        "Log files are created by the logger class object.\n" +
-                        "Suppose an application where the logging utility has to produce one log file\n" +
-                        "based on the messages received from the users.\n" +
-                        "If there is multiple client application using this\n" +
-                        "logging utility class they might create multiple instances\n" +
-                        "of this class and it can potentially cause issues during concurrent\n" +
-                        "access to the same logger file. We can use the logger utility class\n" +
-                        "as a singleton and provide a global point of reference\n" +
-                        "so that each user can use this utility and no 2 users access it at the same time."));
-                panels.add(panel2);
-
-                TutorialDialogs dialog = new TutorialDialogs("Common Uses", null, panels);
+                TutorialDialogs dialog = new TutorialDialogs("Hardware Interfaces", text, null);
                 dialog.pack();
                 dialog.setLocationRelativeTo(null);
                 dialog.setVisible(true);
 
             }
         });
-
         loggerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JTextArea text1 = new JTextArea(
                         "Singleton classes are used in log file generations.\n" +
                         "Log files are created by the logger class object.\n" +
-                       "Suppose an application where the logging utility has to produce one log file\n" +
+                        "Suppose an application where the logging utility has to produce one log file\n" +
                         "based on the messages received from the users.\n" +
                         "If there is multiple client application using this\n" +
                         "logging utility class they might create multiple instances\n" +
-                       "of this class and it can potentially cause issues during concurrent\n" +
+                        "of this class and it can potentially cause issues during concurrent\n" +
                         "access to the same logger file. We can use the logger utility class\n" +
                         "as a singleton and provide a global point of reference\n" +
                         "so that each user can use this utility and no 2 users access it at the same time."
@@ -118,46 +90,55 @@ public class SingletonCards {
                 dialog.setVisible(true);
             }
         });
-
-
-//        JTextArea text2 = new JTextArea(
-//                "Logger : Singleton classes are used in log file generations.\n" +
-//                        "Log files are created by the logger class object.\n" +
-//                        "Suppose an application where the logging utility has to produce one log file\n" +
-//                        "based on the messages received from the users.\n" +
-//                        "If there is multiple client application using this\n" +
-//                        "logging utility class they might create multiple instances\n" +
-//                        "of this class and it can potentially cause issues during concurrent\n" +
-//                        "access to the same logger file. We can use the logger utility class\n" +
-//                        "as a singleton and provide a global point of reference\n" +
-//                        "so that each user can use this utility and no 2 users access it at the same time."
-//        );
-//        JTextArea text3 = new JTextArea(
-//                "Configuration File: This is another potential candidate\n" +
-//                        "for Singleton pattern because this has a performance benefit as\n" +
-//                        "it prevents multiple users to repeatedly access and read the configuration file\n" +
-//                        "or properties file. It creates a single instance of the configuration file\n" +
-//                        "which can be accessed by multiple calls concurrently as it will provide\n" +
-//                        "static config data loaded into in-memory objects.\n" +
-//                        "The application only reads from the configuration file\n" +
-//                        "for the first time and thereafter from second call onwards\n" +
-//                        "the client applications read the data from in-memory objects."
-//        );
-//        page.add(title);
-//        page.add(Box.createRigidArea(new Dimension(5,10)));
-//        page.add(text1);
-//        page.add(Box.createRigidArea(new Dimension(5,10)));
-//        page.add(text2);
-//        page.add(Box.createRigidArea(new Dimension(5,10)));
-//        page.add(text3);
-//        page.add(Box.createRigidArea(new Dimension(5,10)));
+        configBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JTextArea text = new JTextArea(
+                        "This is another potential candidate\n" +
+                        "for Singleton pattern because this has a performance benefit as\n" +
+                        "it prevents multiple users to repeatedly access and read the configuration file\n" +
+                        "or properties file. It creates a single instance of the configuration file\n" +
+                        "which can be accessed by multiple calls concurrently as it will provide\n" +
+                        "static config data loaded into in-memory objects.\n" +
+                        "The application only reads from the configuration file\n" +
+                        "for the first time and thereafter from second call onwards\n" +
+                        "the client applications read the data from in-memory objects."
+                        );
+                TutorialDialogs dialog = new TutorialDialogs("Config files", text, null);
+                dialog.pack();
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            }
+        });
+        cacheBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JTextArea text = new JTextArea(
+                        "We can use the cache as a singleton object as it can have\n" +
+                                "a global point of reference and for all future calls to\n" +
+                                "the cache object the client application will use the in-memory object."
+                );
+                TutorialDialogs dialog = new TutorialDialogs("Caching", text, null);
+                dialog.pack();
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            }
+        });
         page.add(title);
         hwInterfaceBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         loggerBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        configBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cacheBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         page.add(Box.createRigidArea(new Dimension(5,10)));
         page.add(hwInterfaceBtn);
+        page.add(Box.createRigidArea(new Dimension(5,10)));
         page.add(loggerBtn);
-        cards[1] = page;
+        page.add(Box.createRigidArea(new Dimension(5,10)));
+        page.add(configBtn);
+        page.add(Box.createRigidArea(new Dimension(5,10)));
+        page.add(cacheBtn);
+        page.add(Box.createRigidArea(new Dimension(5,10)));
+        cards.add(page);
     }
 
 }
