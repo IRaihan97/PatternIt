@@ -1,7 +1,7 @@
 package GUI.Tutorials;
 
 import GUI.ClassGenerators.ClassGenerator;
-import GUI.Tutorials.SingletonTutorial;
+import GUI.Tutorials.Singleton.SingletonCard;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.sun.istack.Nullable;

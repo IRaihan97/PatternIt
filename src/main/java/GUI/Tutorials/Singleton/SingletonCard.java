@@ -1,4 +1,4 @@
-package GUI.Tutorials;
+package GUI.Tutorials.Singleton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,8 +6,8 @@ import java.awt.event.*;
 
 public class SingletonCard extends JDialog {
     private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
+    private JButton nextBtn;
+    private JButton prevBtn;
     private CardLayout pageCards = new CardLayout();
     private JPanel pages;
     private int n = 0;
@@ -16,7 +16,7 @@ public class SingletonCard extends JDialog {
     public SingletonCard() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(nextBtn);
         pages.setLayout(pageCards);
 //        JPanel newP = new JPanel();
 //        newP.add(new JLabel("P1"));
@@ -24,7 +24,7 @@ public class SingletonCard extends JDialog {
 //        newP1.add(new JLabel("P2"));
 //        pages.add(newP, "1");
 //        pages.add(newP1, "2");
-        SingletonCards cards = new SingletonCards(contentPane);
+        SingletonCards cards = new SingletonCards();
         JPanel[] cardstoAdd = cards.getCards();
         lastPaneidx = cardstoAdd.length-1;
         for (int i = 0; i < cardstoAdd.length; i++){
@@ -38,13 +38,13 @@ public class SingletonCard extends JDialog {
         
 
 
-        buttonOK.addActionListener(new ActionListener() {
+        nextBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 next();
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
+        prevBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 previous();
             }

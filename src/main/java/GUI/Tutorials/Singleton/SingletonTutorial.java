@@ -1,4 +1,4 @@
-package GUI.Tutorials;
+package GUI.Tutorials.Singleton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,8 +7,6 @@ import java.util.List;
 
 import com.github.cjwizard.*;
 import com.github.cjwizard.pagetemplates.TitledPageTemplate;
-import com.intellij.ui.wizard.WizardModel;
-import net.miginfocom.layout.Grid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
