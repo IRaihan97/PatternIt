@@ -1,7 +1,7 @@
-package GUI;
+package GUI.Tutorials;
 
-import GUI.Tutorials.SingletonTutorial;
-import InputHolders.ClassInputs;
+import GUI.ClassGenerators.ClassGenerator;
+import GUI.Tutorials.Singleton.SingletonTutorial;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.sun.istack.Nullable;
@@ -16,16 +16,24 @@ public class TutorialWrapper extends DialogWrapper {
         super(project);
         singletonForm = new SingletonTutorial();
         init();
-
         setTitle("Singleton Generator");
     }
     //https://ayusch.com/intellij-plugin-development-tutorial-handling-user-input/
-
+//
+//    @Override
+    protected JComponent createSouthPanel(){
+        return null;
+    }
 
     @Nullable
     @Override
     protected JComponent createCenterPanel() {
         return singletonForm.getContent();
+
+    }
+
+    @Override
+    protected void doOKAction() {
 
     }
 

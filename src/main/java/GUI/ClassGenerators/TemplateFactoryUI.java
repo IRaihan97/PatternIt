@@ -1,11 +1,8 @@
-package GUI;
+package GUI.ClassGenerators;
 
 import InputHolders.ClassInputs;
 import JavaPoetTemplates.FieldGen;
 import JavaPoetTemplates.MethodGen;
-import JavaPoetTemplates.Patterns.Composite.Component;
-import JavaPoetTemplates.Patterns.Composite.Composite;
-import JavaPoetTemplates.Patterns.Composite.Leaf;
 import JavaPoetTemplates.Patterns.Template.AbstractTemplate;
 import JavaPoetTemplates.Patterns.Template.Concrete;
 import com.intellij.openapi.project.Project;
@@ -15,10 +12,10 @@ import com.sun.istack.Nullable;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class TemplateGenDialogWrapper extends DialogWrapper {
+public class TemplateFactoryUI extends DialogWrapper {
     private TemplateForm templateForm;
     private AbstractTemplate templateClass;
-    public TemplateGenDialogWrapper(@Nullable Project project) {
+    public TemplateFactoryUI(@Nullable Project project) {
         super(project);
         templateForm = new TemplateForm();
         init();

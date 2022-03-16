@@ -1,16 +1,17 @@
 package Actions;
 
-import GUI.CompositeGenDialogWrapper;
-import GUI.SingletonGenDialogWrapper;
-import GUI.TemplateGenDialogWrapper;
-import GUI.TutorialWrapper;
-import GUI.Tutorials.SingletonTutorial;
+import GUI.ClassGenerators.CompositeFactoryUI;
+import GUI.ClassGenerators.SingletonFactoryUI;
+import GUI.ClassGenerators.TemplateFactoryUI;
+import GUI.Tutorials.TutorialWrapper;
+import GUI.UIFactory;
 import InputHolders.ClassInputs;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.psi.*;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -44,6 +45,7 @@ public class ClassGenAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
+
         String selectedPath = selectedDir.toString();
         String outputPath = selectedPath.toString();
         File outPut = new File(outputPath.substring(13));
@@ -53,24 +55,31 @@ public class ClassGenAction extends AnAction {
         ClassInputs.INSTANCE.setPatternToGenerate(action);
 
 
+        DialogWrapper ui = UIFactory.createUI(action.toString(), project);
+        ui.show();
 
-        if(action.equals("Composite")){
-//            CompositeGenDialogWrapper compositeUI = new CompositeGenDialogWrapper(anActionEvent.getProject());
+//
+//        if(action.equals("Composite")){
+//            CompositeFactoryUI compositeUI = new CompositeFactoryUI(anActionEvent.getProject());
 //            compositeUI.show();
-            TutorialWrapper dialog = new TutorialWrapper(anActionEvent.getProject());
-            dialog.pack();
-            dialog.show();
-        }
-
-        else if(action.equals("Template")){
-            TemplateGenDialogWrapper templateUI = new TemplateGenDialogWrapper(anActionEvent.getProject());
-            templateUI.show();
-        }
-
-        else{
-            SingletonGenDialogWrapper singletonUI = new SingletonGenDialogWrapper(anActionEvent.getProject());
-            singletonUI.show();
-        }
+//
+//        }
+//
+//        else if(action.equals("Template")){
+//            TemplateFactoryUI templateUI = new TemplateFactoryUI(anActionEvent.getProject());
+//            templateUI.show();
+//        }
+//
+//        else if(action.equals("What's a Singleton?")){
+//            TutorialWrapper dialog = new TutorialWrapper(anActionEvent.getProject());
+//            dialog.pack();
+//            dialog.show();
+//        }
+//
+//        else{
+//            SingletonFactoryUI singletonUI = new SingletonFactoryUI(anActionEvent.getProject());
+//            singletonUI.show();
+//        }
 
         ArrayList<TypeSpec> filesToWrite  = ClassInputs.INSTANCE.getClassGen();
         for(int i = 0; i < filesToWrite.size(); i++){
