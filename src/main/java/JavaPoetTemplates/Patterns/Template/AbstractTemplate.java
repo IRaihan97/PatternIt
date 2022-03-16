@@ -41,38 +41,6 @@ public class AbstractTemplate {
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addComment("This is a generic definition for the final method")
                 .addComment("You can apply your own method definition here");
-//        String aurgumentsToAdd = "";
-//        for(int i = 0; i < methodGenToAdd.size(); i++){
-//            if(methodGenToAdd.get(i).getParameters()!=null){
-//                for(int j = 0; j < methodGenToAdd.get(i).getParameters().size(); i++){
-//                    Class parameterType = methodGenToAdd.get(i).getParameters().get(j).getParameterType();
-//                    if(parameterType== int.class
-//                            || parameterType == double.class
-//                            || parameterType == long.class
-//                            || parameterType == short.class
-//                            || parameterType == float.class
-//                    ){
-//                        if(j == methodGenToAdd.get(i).getParameters().size()-1){
-//                            aurgumentsToAdd+="0)";
-//                        }
-//                        else{
-//                            aurgumentsToAdd+="0,";
-//                        }
-//                    }
-//                    else{
-//                        if(j == methodGenToAdd.get(i).getParameters().size()-1){
-//                            aurgumentsToAdd+="null)";
-//                        }
-//                        else{
-//                            aurgumentsToAdd+="null,";
-//                        }
-//                    }
-//                }
-//            }
-//
-//
-//        }
-//        System.out.println(aurgumentsToAdd);
         methodGenToAdd.forEach((method) -> finalMethod.addStatement("$L()", method.getMethodName()));
         absClassBuilder.addMethod(finalMethod.build());
 

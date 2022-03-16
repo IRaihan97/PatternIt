@@ -12,10 +12,10 @@ import com.sun.istack.Nullable;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class TemplateGenDialogWrapper extends DialogWrapper {
+public class TemplateFactoryUI extends DialogWrapper {
     private TemplateForm templateForm;
     private AbstractTemplate templateClass;
-    public TemplateGenDialogWrapper(@Nullable Project project) {
+    public TemplateFactoryUI(@Nullable Project project) {
         super(project);
         templateForm = new TemplateForm();
         init();

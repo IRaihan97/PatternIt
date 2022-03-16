@@ -8,11 +8,11 @@ import com.sun.istack.Nullable;
 import javax.swing.*;
 
 
-public class SingletonGenDialogWrapper extends DialogWrapper {
+public class SingletonFactoryUI extends DialogWrapper {
     private ClassGenerator classGenForm;
     private SingletonForm singletonForm;
 
-    public SingletonGenDialogWrapper(@Nullable Project project) {
+    public SingletonFactoryUI(@Nullable Project project) {
         super(project);
         singletonForm = new SingletonForm();
         init();

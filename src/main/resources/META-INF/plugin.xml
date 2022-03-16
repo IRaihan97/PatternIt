@@ -46,6 +46,13 @@
                         description="UI for generating class.">
 
                 </action>
+                <separator></separator>
+                <action id="singletonTutorial"
+                        class="Actions.ClassGenAction"
+                        text="What's a Singleton?"
+                        description="UI for generating class.">
+
+                </action>
             </group>
             <separator></separator>
             <action id="compositeGenerator"

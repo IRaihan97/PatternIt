@@ -3,6 +3,7 @@ package GUI.Tutorials.Singleton;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class SingletonTutorial extends JDialog {
     private JPanel contentPane;
@@ -25,10 +26,10 @@ public class SingletonTutorial extends JDialog {
 //        pages.add(newP, "1");
 //        pages.add(newP1, "2");
         SingletonCards cards = new SingletonCards();
-        JPanel[] cardstoAdd = cards.getCards();
-        lastPaneidx = cardstoAdd.length-1;
-        for (int i = 0; i < cardstoAdd.length; i++){
-            pages.add(cardstoAdd[i], Integer.toString(i));
+        ArrayList<JPanel> cardstoAdd = cards.getCards();
+        lastPaneidx = cardstoAdd.size()-1;
+        for (int i = 0; i < cardstoAdd.size(); i++){
+            pages.add(cardstoAdd.get(i), Integer.toString(i));
         }
 
 

@@ -14,10 +14,10 @@ import com.sun.istack.Nullable;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class CompositeGenDialogWrapper extends DialogWrapper {
+public class CompositeFactoryUI extends DialogWrapper {
     private CompositeForm compositeForm;
     private Component component;
-    public CompositeGenDialogWrapper(@Nullable Project project) {
+    public CompositeFactoryUI(@Nullable Project project) {
         super(project);
         compositeForm = new CompositeForm();
         init();
