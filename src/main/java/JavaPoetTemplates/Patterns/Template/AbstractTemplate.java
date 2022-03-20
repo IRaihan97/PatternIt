@@ -34,7 +34,10 @@ public class AbstractTemplate {
         }
         if(methodGenToAdd !=null){
 
-            methodGenToAdd.forEach((method) -> absClassBuilder.addMethod(method.getMethod().toBuilder().addModifiers(Modifier.ABSTRACT).build()));
+            methodGenToAdd.forEach(
+                    (method) -> absClassBuilder.addMethod(method.getMethod()
+                            .toBuilder()
+                            .addModifiers(Modifier.ABSTRACT).build()));
         }
         MethodSpec.Builder finalMethod = MethodSpec
                 .methodBuilder("templateMethodExample")

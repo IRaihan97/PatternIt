@@ -16,7 +16,8 @@ public class Leaf {
     private ClassName componentType;
     private TypeSpec leafGen;
 
-    public Leaf(Component componentClass, String leafObjName, String packageName, ArrayList<FieldGen> fieldGenToAdd, ArrayList<MethodGen> methodsToAdd) {
+    public Leaf(Component componentClass, String leafObjName, String packageName,
+                ArrayList<FieldGen> fieldGenToAdd, ArrayList<MethodGen> methodsToAdd) {
         this.componentName = componentClass.getComponentName();
         this.componentClass = componentClass;
         this.leafObjName = leafObjName;
