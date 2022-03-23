@@ -55,31 +55,8 @@ public class ClassGenAction extends AnAction {
         ClassInputs.INSTANCE.setPatternToGenerate(action);
 
 
-        DialogWrapper ui = UIFactory.createUI(action.toString(), project);
+        DialogWrapper ui = UIFactory.createUI(action, project);
         ui.show();
-
-//
-//        if(action.equals("Composite")){
-//            CompositeFactoryUI compositeUI = new CompositeFactoryUI(anActionEvent.getProject());
-//            compositeUI.show();
-//
-//        }
-//
-//        else if(action.equals("Template")){
-//            TemplateFactoryUI templateUI = new TemplateFactoryUI(anActionEvent.getProject());
-//            templateUI.show();
-//        }
-//
-//        else if(action.equals("What's a Singleton?")){
-//            TutorialWrapper dialog = new TutorialWrapper(anActionEvent.getProject());
-//            dialog.pack();
-//            dialog.show();
-//        }
-//
-//        else{
-//            SingletonFactoryUI singletonUI = new SingletonFactoryUI(anActionEvent.getProject());
-//            singletonUI.show();
-//        }
 
         ArrayList<TypeSpec> filesToWrite  = ClassInputs.INSTANCE.getClassGen();
         for(int i = 0; i < filesToWrite.size(); i++){

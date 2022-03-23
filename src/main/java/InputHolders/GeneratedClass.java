@@ -15,5 +15,4 @@ public class GeneratedClass {
     }
     public void setHasPsvm(boolean hasPsvm) {
         this.hasPsvm = hasPsvm;
-    }
-}
+    }}

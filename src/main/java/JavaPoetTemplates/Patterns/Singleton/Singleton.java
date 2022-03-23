@@ -54,7 +54,7 @@ public class Singleton {
         }
     }
 
-    public Singleton(){}
+    public Singleton() {}
 
     private TypeSpec generateSingleton(){
         FieldSpec.Builder singletonObj = FieldSpec

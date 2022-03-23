@@ -24,6 +24,7 @@ public class Composite{
         ClassName arrayList = ClassName.get("java.util", "ArrayList");
         TypeName compositeFieldType = ParameterizedTypeName.get(arrayList, componentType);
 
+        //Composite Field List
         FieldSpec componentList = FieldSpec
                 .builder(compositeFieldType, compositeObjName, Modifier.PRIVATE)
                 .initializer("new $T()", compositeFieldType)
@@ -55,7 +56,7 @@ public class Composite{
                 .addMethod(removeComponent)
                 .addMethod(componentClass.getDefaultMethod().toBuilder()
                         .addAnnotation(Override.class).build());
-            componentClass.getCommonMethods().forEach((methods) ->
+        componentClass.getCommonMethods().forEach((methods) ->
                     compositeBuilder.addMethod(methods.getMethod().toBuilder().addAnnotation(Override.class).build()));
 
 
