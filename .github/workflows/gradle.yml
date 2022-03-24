@@ -9,7 +9,7 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, Development ]
   pull_request:
     branches: [ main ]
 
@@ -28,8 +28,6 @@ jobs:
         
     - name: Make gradle executable
       run: chmod +x ./gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
     - name: Test with Gradle
       run: ./gradlew test
 
