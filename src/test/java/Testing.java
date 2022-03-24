@@ -7,7 +7,7 @@ import JavaPoetTemplates.Patterns.Composite.Leaf;
 import JavaPoetTemplates.Patterns.Singleton.Singleton;
 import JavaPoetTemplates.Patterns.Template.AbstractTemplate;
 import JavaPoetTemplates.Patterns.Template.Concrete;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -83,7 +83,7 @@ public class Testing {
         generateParameters();
         MethodGen method1 = new MethodGen("methodName1", modifiers, void.class, parametersToAdd, false, null);
         String generateMethod = method1.getMethod().toString();
-        Assert.assertEquals("public static void methodName1(int param1, float param2) {\n" +
+        Assertions.assertEquals("public static void methodName1(int param1, float param2) {\n" +
                 "  // TODO - your Method Implementation Here\n" +
                 "}\n", generateMethod);
     }
@@ -94,7 +94,7 @@ public class Testing {
         generateModifier();
         FieldGen field = new FieldGen(void.class, "exampleField", modifiers, "exampleClass");
         String generateField = field.getField().toString();
-        Assert.assertEquals("public static void exampleField;\n", generateField);
+        Assertions.assertEquals("public static void exampleField;\n", generateField);
     }
 
     @Test
@@ -105,7 +105,7 @@ public class Testing {
         generateMethods();
         singleton = new Singleton("EagerExample", "Eager", "SamplePacakge", fieldsToAdd, methodsToAdd);
         String generatedClass = singleton.getClassGen().toString();
-        Assert.assertEquals("class EagerExample {\n" +
+        Assertions.assertEquals("class EagerExample {\n" +
                 "  private static SamplePacakge.EagerExample eagerExample = new SamplePacakge.EagerExample();\n" +
                 "\n" +
                 "  void exampleField1;\n" +
@@ -141,7 +141,7 @@ public class Testing {
         generateAbsMethods();
         component = new Component("ComponentInterfaceExample", methodsToAdd);
         String generatedInterface = component.getInterfaceGen().toString();
-        Assert.assertEquals("interface ComponentInterfaceExample {\n" +
+        Assertions.assertEquals("interface ComponentInterfaceExample {\n" +
                 "  void showComponentInterfaceExampleDetails();\n" +
                 "\n" +
                 "  private void methodName1(int param1, float param2);\n" +
@@ -159,7 +159,7 @@ public class Testing {
         component = new Component("ComponentInterfaceExample", methodsToAdd);
         composite = new Composite(component, "compositeExample", "sample");
         String generatedComposite = composite.getCompositeGen().toString();
-        Assert.assertEquals("public class compositeExample implements sample.ComponentInterfaceExample {\n" +
+        Assertions.assertEquals("public class compositeExample implements sample.ComponentInterfaceExample {\n" +
                 "  private java.util.ArrayList<sample.ComponentInterfaceExample> compositeExample = new java.util.ArrayList<sample.ComponentInterfaceExample>();\n" +
                 "\n" +
                 "  void addComponentInterfaceExample(sample.ComponentInterfaceExample componentinterfaceexample) {\n" +
@@ -199,7 +199,7 @@ public class Testing {
         generateFields();
         leaf = new Leaf(component, "LeafExample","sample", fieldsToAdd, methodsToAdd);
         String generatedLeaf = leaf.getLeafGen().toString();
-        Assert.assertEquals("class LeafExample implements sample.ComponentInterfaceExample {\n" +
+        Assertions.assertEquals("class LeafExample implements sample.ComponentInterfaceExample {\n" +
                 "  public static void exampleField1;\n" +
                 "\n" +
                 "  public static int exampleField2;\n" +
@@ -250,7 +250,7 @@ public class Testing {
         absTemplate = new AbstractTemplate("templateExample", "sample",fieldsToAdd, methodsToAdd);
         generateMethods();
         String generatedTemplate = absTemplate.getAbsClassGen().toString();
-        Assert.assertEquals("public abstract class templateExample {\n" +
+        Assertions.assertEquals("public abstract class templateExample {\n" +
                 "  private void exampleField1;\n" +
                 "\n" +
                 "  private int exampleField2;\n" +
@@ -282,7 +282,7 @@ public class Testing {
         concrete = new Concrete( "concreteExample", absTemplate);
         String generatedConcrete = concrete.getConcreteGen().toString();
         System.out.println(generatedConcrete);
-        Assert.assertEquals("class concreteExample extends sample.templateExample {\n" +
+        Assertions.assertEquals("class concreteExample extends sample.templateExample {\n" +
                 "  @java.lang.Override\n" +
                 "  private void methodName1(int param1, float param2) {\n" +
                 "    // Add concrete Implementation Here\n" +
