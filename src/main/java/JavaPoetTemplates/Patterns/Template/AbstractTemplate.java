@@ -17,6 +17,8 @@ public class AbstractTemplate {
     private ClassName componentType;
     private TypeSpec absClassGen;
 
+    public AbstractTemplate(){};
+
     public AbstractTemplate(String absClassName, String packageName, ArrayList<FieldGen> fieldGenToAdd, ArrayList<MethodGen> methodGenToAdd) {
         this.absClassName = absClassName;
         this.fieldGenToAdd = fieldGenToAdd;

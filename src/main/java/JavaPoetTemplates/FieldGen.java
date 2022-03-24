@@ -22,6 +22,8 @@ public class FieldGen {
     private String targetClass;
     private ParameterSpec derivedParameter;
 
+    public FieldGen(){};
+
     public FieldGen(Class fieldType, String fieldName, ArrayList<Modifier> fieldModifiers, String targetClass){
         this.fieldType = fieldType;
         this.fieldName = fieldName;
