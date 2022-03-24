@@ -12,6 +12,8 @@ public class Composite{
     private ClassName componentType;
     private TypeSpec compositeGen;
 
+    public Composite(){};
+
     public Composite(Component component, String compositeObjName, String packageName) {
         this.componentInterface = component.getComponentName();
         this.componentClass = component;

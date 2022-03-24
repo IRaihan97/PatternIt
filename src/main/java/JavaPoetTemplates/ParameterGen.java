@@ -10,7 +10,7 @@ public class ParameterGen {
     private String targetMethod;
     private ParameterSpec parameterGen;
 
-
+    public ParameterGen(){};
     public ParameterGen(String parameterName, Class parameterType) {
         this.parameterName = parameterName;
         this.parameterType = parameterType;
