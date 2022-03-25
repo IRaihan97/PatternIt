@@ -1,6 +1,7 @@
 package GUI.ClassGenerators;
 
 import InputHolders.ClassInputs;
+import InputHolders.TextFieldVerifier;
 import JavaPoetTemplates.ParameterGen;
 import com.intellij.openapi.ui.ComboBox;
 
@@ -22,6 +23,7 @@ public class Parameters extends JDialog {
     private ArrayList<JComponent[]> currentComponents;
     private int panelIndex = 0;
     GridBagConstraints con = new GridBagConstraints();
+    private TextFieldVerifier inputVerifier = new TextFieldVerifier();
 
     private String methodName;
 
@@ -116,6 +118,7 @@ public class Parameters extends JDialog {
         JComponent[] component = new JComponent[3];
         JLabel parameterName = new JLabel("Parameter Name");
         JTextField parameterNameInput = new JTextField();
+        parameterNameInput.setInputVerifier(inputVerifier);
         parameterNameInput.setSize(new Dimension(200, 10));
         ComboBox typeBox = new ComboBox();
         createTypeBox(typeBox);

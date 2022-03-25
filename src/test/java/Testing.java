@@ -281,7 +281,6 @@ public class Testing {
         absTemplate = new AbstractTemplate("templateExample", "sample",fieldsToAdd, methodsToAdd);
         concrete = new Concrete( "concreteExample", absTemplate);
         String generatedConcrete = concrete.getConcreteGen().toString();
-        System.out.println(generatedConcrete);
         Assertions.assertEquals("class concreteExample extends sample.templateExample {\n" +
                 "  @java.lang.Override\n" +
                 "  private void methodName1(int param1, float param2) {\n" +

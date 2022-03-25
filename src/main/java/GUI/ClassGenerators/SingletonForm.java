@@ -1,6 +1,7 @@
 package GUI.ClassGenerators;
 
 import InputHolders.ClassInputs;
+import InputHolders.TextFieldVerifier;
 import lombok.Data;
 
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class SingletonForm {
     private JButton addFieldBtn;
     private JButton addMethodBtn;
     private GridBagConstraints con = new GridBagConstraints();
+    private TextFieldVerifier inputVerifier = new TextFieldVerifier();
 
     public SingletonForm(){
         addFieldBtn.addActionListener(new ActionListener() {
@@ -47,7 +49,8 @@ public class SingletonForm {
             }
         });
 
-
+//        singletonName.setInputVerifier(inputVerifier);
+//        packageName.setInputVerifier(inputVerifier);
 
 //        singletonName.getDocument().addDocumentListener(new DocumentListener() {
 //            @Override

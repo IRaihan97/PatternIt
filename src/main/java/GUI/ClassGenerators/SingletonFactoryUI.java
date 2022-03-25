@@ -1,6 +1,7 @@
 package GUI.ClassGenerators;
 
 import InputHolders.ClassInputs;
+import InputHolders.TextFieldVerifier;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.sun.istack.Nullable;
@@ -11,6 +12,7 @@ import javax.swing.*;
 public class SingletonFactoryUI extends DialogWrapper {
     private ClassGenerator classGenForm;
     private SingletonForm singletonForm;
+    private TextFieldVerifier inputVerifier = new TextFieldVerifier();
 
     public SingletonFactoryUI(@Nullable Project project) {
         super(project);
@@ -25,6 +27,8 @@ public class SingletonFactoryUI extends DialogWrapper {
     @Nullable
     @Override
     protected JComponent createCenterPanel() {
+        singletonForm.getSingletonName().setInputVerifier(inputVerifier);
+        singletonForm.getPackageName().setInputVerifier(inputVerifier);
         return singletonForm.getContent();
 
     }
