@@ -22,7 +22,7 @@ public class FieldGen {
     private String targetClass;
     private ParameterSpec derivedParameter;
 
-    public FieldGen(){};
+
 
     public FieldGen(Class fieldType, String fieldName, ArrayList<Modifier> fieldModifiers, String targetClass){
         this.fieldType = fieldType;
@@ -53,13 +53,7 @@ public class FieldGen {
         return fieldName;
     }
 
-    public Class getFieldType() {
-        return fieldType;
-    }
 
-    public ArrayList<Modifier> getFieldModifiers() {
-        return fieldModifiers;
-    }
 
     public FieldSpec getField(){
         return field;

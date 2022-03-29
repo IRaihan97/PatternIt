@@ -13,7 +13,7 @@ public class Concrete {
     private ArrayList<MethodGen> methodGenToAdd;
     private ArrayList<FieldGen> fieldGenToAdd;
 
-    public Concrete(){};
+
 
     public Concrete(String concreteName, AbstractTemplate templateClass) {
         this.concreteName = concreteName;

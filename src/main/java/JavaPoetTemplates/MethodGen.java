@@ -20,7 +20,7 @@ public class MethodGen {
     private boolean isAbstract;
     private String targetClass;
 
-    public MethodGen(){};
+
 
     public MethodGen(String methodName, ArrayList<Modifier> methodModifiers,
                      Class methodType, ArrayList<ParameterGen> parameters, boolean isAbstract, String targetClass)

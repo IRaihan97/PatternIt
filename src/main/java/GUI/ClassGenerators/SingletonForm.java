@@ -29,19 +29,29 @@ public class SingletonForm {
     private TextFieldVerifier inputVerifier = new TextFieldVerifier();
 
     public SingletonForm(){
+        SwingUtilities.invokeLater( new Runnable() {
+
+            public void run() {
+                singletonLb.requestFocus();
+                singletonName.setInputVerifier(inputVerifier);
+                packageName.setInputVerifier(inputVerifier);
+            }
+        } );
+
         addFieldBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!validateFields())return;
                 Fields dialog = new Fields("");
                 dialog.pack();
                 dialog.setLocationRelativeTo(null);
                 dialog.setVisible(true);
             }
         });
-
         addMethodBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!validateFields())return;
                 Methods dialog = new Methods("", false);
                 dialog.pack();
                 dialog.setLocationRelativeTo(null);
@@ -87,7 +97,12 @@ public class SingletonForm {
                 ClassInputs.INSTANCE.setPackageName(packageName.getText());
             }
         });
+    }
 
+    private boolean validateFields(){
+        if(!inputVerifier.verify(singletonName))return false;
+        if(!inputVerifier.verify(packageName))return false;
+        return true;
     }
     private void addFieldRow(){
 
@@ -99,8 +114,6 @@ public class SingletonForm {
 
 
     public JComponent getContent() {
-
-
         return mainPanel;
     }
 

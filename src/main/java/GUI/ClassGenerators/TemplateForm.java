@@ -1,6 +1,7 @@
 package GUI.ClassGenerators;
 
 import InputHolders.ClassInputs;
+import InputHolders.TextFieldVerifier;
 import lombok.Data;
 
 import javax.swing.*;
@@ -30,10 +31,18 @@ public class TemplateForm {
     private int concreteIndex = 0;
     private GridBagConstraints conComp = new GridBagConstraints();
     private ArrayList<JComponent[]> concreteComps = new ArrayList<>();
-
+    private TextFieldVerifier inputVerifier = new TextFieldVerifier();
 
 
     TemplateForm(){
+        SwingUtilities.invokeLater( new Runnable() {
+
+            public void run() {
+                interfaceLb.requestFocus();
+                interfaceNameIn.setInputVerifier(inputVerifier);
+                packageNameIn.setInputVerifier(inputVerifier);
+            }
+        } );
         conComp.gridy = 0;
         //mainPanel.setPreferredSize(new Dimension(700, 1000));
         Dimension scrollD = new Dimension(500, 100);
@@ -62,6 +71,7 @@ public class TemplateForm {
         addAbstractMethodsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!validateFields())return;
                 Methods dialog = new Methods(interfaceNameIn.getText(), true);
                 dialog.pack();
                 dialog.setLocationRelativeTo(null);
@@ -72,6 +82,7 @@ public class TemplateForm {
         addAbstractFieldsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!validateFields())return;
                 Fields dialog = new Fields(interfaceNameIn.getText());
                 dialog.pack();
                 dialog.setLocationRelativeTo(null);
@@ -84,6 +95,7 @@ public class TemplateForm {
         addConcreteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!validateFields())return;
                 addJComponents();
                 addObjectRow(concreteDefinerPanel, conComp, "Concrete");
                 panelSizeIncrease(concreteDefinerPanel);
@@ -113,6 +125,7 @@ public class TemplateForm {
         JComponent[] components = new JComponent[4];
         JLabel label = new JLabel("Concrete Class Name:");
         JTextField classNameInput = new JTextField();
+        classNameInput.setInputVerifier(inputVerifier);
         JButton addField = new JButton("Add Fields");
         JButton addMethod = new JButton("Add Methods");
         addField.addActionListener(new ActionListener() {
@@ -156,6 +169,13 @@ public class TemplateForm {
         panel.revalidate();
 
         con.gridy++;
+    }
+
+
+    private boolean validateFields(){
+        if(!inputVerifier.verify(interfaceNameIn))return false;
+        if(!inputVerifier.verify(packageNameIn))return false;
+        return true;
     }
 
     public JComponent getContent(){

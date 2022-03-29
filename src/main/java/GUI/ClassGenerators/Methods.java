@@ -96,32 +96,39 @@ public class Methods extends JDialog {
     private void onOK() {
         // add your code here
         //ClassInputs.INSTANCE.getMethods().clear();
-        for (int i = 0; i < componentsToAdd.size(); i++) {
-            JComponent[] components = componentsToAdd.get(i);
-            ArrayList<javax.lang.model.element.Modifier> modifiers = new ArrayList<>();
-            JTextField methodInput = (JTextField) components[1];
-            modifiers.add(modDropDown((ComboBox) components[2]));
-            if(!isAbstract){
-                modifiers.add(modDropDown((ComboBox) components[3]));
-            }
+        try{
+            for (int i = 0; i < componentsToAdd.size(); i++) {
+                JComponent[] components = componentsToAdd.get(i);
+                ArrayList<javax.lang.model.element.Modifier> modifiers = new ArrayList<>();
+                JTextField methodInput = (JTextField) components[1];
+                modifiers.add(modDropDown((ComboBox) components[2]));
+                if(!isAbstract){
+                    modifiers.add(modDropDown((ComboBox) components[3]));
+                }
 
-            Class type = typeDropDown((ComboBox) components[4]);
-            ArrayList<ParameterGen> parameterBank = ClassInputs.INSTANCE.getParameters();
-            ArrayList<ParameterGen> parametersToAdd = new ArrayList<>();
-            if(parameterBank!=null){
-                parameterBank.stream().filter(parameter -> parameter.getTargetMethod().equals(methodInput.getText())).forEach(
-                        parameter -> {
-                            parametersToAdd.add(parameter);
-                        }
-                );
+                Class type = typeDropDown((ComboBox) components[4]);
+                ArrayList<ParameterGen> parameterBank = ClassInputs.INSTANCE.getParameters();
+                ArrayList<ParameterGen> parametersToAdd = new ArrayList<>();
+                if(parameterBank!=null){
+                    parameterBank.stream().filter(parameter -> parameter.getTargetMethod().equals(methodInput.getText())).forEach(
+                            parameter -> {
+                                parametersToAdd.add(parameter);
+                            }
+                    );
+                }
+                MethodGen method = new MethodGen(methodInput.getText(), modifiers, type, parametersToAdd, isAbstract, className);
+                ClassInputs.INSTANCE.addMethods(method);
+                ClassInputs.INSTANCE.setMethodsToAddComps(componentsToAdd);
+                panelIndex = 0;
+                con.gridy = 1;
             }
-            MethodGen method = new MethodGen(methodInput.getText(), modifiers, type, parametersToAdd, isAbstract, className);
-            ClassInputs.INSTANCE.addMethods(method);
-            ClassInputs.INSTANCE.setMethodsToAddComps(componentsToAdd);
-            panelIndex = 0;
-            con.gridy = 1;
+            dispose();
         }
-        dispose();
+        catch(Exception e){
+            JOptionPane.showMessageDialog(contentPane, "Invalid name, names cannot be blank or contain special characters","Error Dialog",
+                    JOptionPane.ERROR_MESSAGE );
+        }
+
     }
 
     private void onCancel() {

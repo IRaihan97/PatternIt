@@ -1,6 +1,5 @@
 package GUI.Tutorials;
 
-import GUI.ClassGenerators.ClassGenerator;
 import GUI.Tutorials.Singleton.SingletonTutorial;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
@@ -9,7 +8,6 @@ import com.sun.istack.Nullable;
 import javax.swing.*;
 
 public class TutorialWrapper extends DialogWrapper {
-    private ClassGenerator classGenForm;
     private SingletonTutorial singletonForm;
 
     public TutorialWrapper(@Nullable Project project) {
@@ -23,6 +21,7 @@ public class TutorialWrapper extends DialogWrapper {
 //    @Override
     protected JComponent createSouthPanel(){
         return null;
+
     }
 
     @Nullable

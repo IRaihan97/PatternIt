@@ -10,7 +10,6 @@ import javax.swing.*;
 
 
 public class SingletonFactoryUI extends DialogWrapper {
-    private ClassGenerator classGenForm;
     private SingletonForm singletonForm;
     private TextFieldVerifier inputVerifier = new TextFieldVerifier();
 
@@ -27,19 +26,24 @@ public class SingletonFactoryUI extends DialogWrapper {
     @Nullable
     @Override
     protected JComponent createCenterPanel() {
-        singletonForm.getSingletonName().setInputVerifier(inputVerifier);
-        singletonForm.getPackageName().setInputVerifier(inputVerifier);
+
         return singletonForm.getContent();
 
     }
 
     @Override
     protected void doOKAction() {
-        addClasses();
-        ClassInputs.INSTANCE.generateClass();
-        ClassInputs.INSTANCE.getFieldsToAddComps().clear();
-        ClassInputs.INSTANCE.getMethodsToAddComps().clear();
-        super.doOKAction();
+        try{
+            addClasses();
+            ClassInputs.INSTANCE.generateClass();
+            ClassInputs.INSTANCE.getFieldsToAddComps().clear();
+            ClassInputs.INSTANCE.getMethodsToAddComps().clear();
+            super.doOKAction();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(singletonForm.getSingletonName(),"Invalid names provided, Please provide valid different names","Error Dialog",
+                    JOptionPane.ERROR_MESSAGE );
+        }
+
     }
 
     private void addClasses(){

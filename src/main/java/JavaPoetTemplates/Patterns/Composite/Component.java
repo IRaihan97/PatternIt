@@ -13,7 +13,6 @@ public class Component {
     private MethodSpec defaultMethod;
     private TypeSpec interfaceGen;
 
-    public Component(){};
     public Component(String componentName, ArrayList<MethodGen> commonMethods) {
         this.componentName = componentName;
         this.commonMethods = commonMethods;

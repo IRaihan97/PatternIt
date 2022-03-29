@@ -80,18 +80,24 @@ public class Parameters extends JDialog {
 
     private void onOK() {
         // add your code here
-        for (int i = 0; i < componentsToAdd.size(); i++) {
-            JComponent[] components = componentsToAdd.get(i);
-            JTextField paramIn = (JTextField) components[1];
-            ComboBox type = (ComboBox) components[2];
-            Class dataType = typeDropDown(type);
-            ParameterGen param = new ParameterGen(paramIn.getText(), dataType, methodName);
-            ClassInputs.INSTANCE.addParameter(param);
-            //SingletonClass.INSTANCE.setMethodsToAddComps(componentsToAdd);
-            panelIndex = 0;
-            con.gridy = 1;
+        try{
+            for (int i = 0; i < componentsToAdd.size(); i++) {
+                JComponent[] components = componentsToAdd.get(i);
+                JTextField paramIn = (JTextField) components[1];
+                ComboBox type = (ComboBox) components[2];
+                Class dataType = typeDropDown(type);
+                ParameterGen param = new ParameterGen(paramIn.getText(), dataType, methodName);
+                ClassInputs.INSTANCE.addParameter(param);
+                //SingletonClass.INSTANCE.setMethodsToAddComps(componentsToAdd);
+                panelIndex = 0;
+                con.gridy = 1;
+                dispose();
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(contentPane, e.getMessage()+", names cannot be blank or contain special characters","Error Dialog",
+                    JOptionPane.ERROR_MESSAGE );
         }
-        dispose();
+
     }
 
     private void parameterAddition() {
