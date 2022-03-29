@@ -27,19 +27,7 @@ public class ClassInputs {
 
 
     public static void generateClass(){
-        if(INSTANCE.patternToGenerate.equals("Composite")){
-            //Generate Composite
-            return;
-        }
-        else if(INSTANCE.patternToGenerate.equals("Template")){
-            //Generate Template
-            return;
-        }
-        else{
-            Singleton singletonClass = new Singleton(INSTANCE.classesToGenerate.get(0), INSTANCE.patternToGenerate, INSTANCE.packageName, INSTANCE.fields, INSTANCE.methods);
-            classGen.add(singletonClass.getClassGen());
-            return;
-        }
+
 
     }
 

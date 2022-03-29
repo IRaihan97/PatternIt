@@ -2,6 +2,7 @@ package GUI.ClassGenerators;
 
 import InputHolders.ClassInputs;
 import InputHolders.TextFieldVerifier;
+import JavaPoetTemplates.Patterns.Singleton.Singleton;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.sun.istack.Nullable;
@@ -35,7 +36,9 @@ public class SingletonFactoryUI extends DialogWrapper {
     protected void doOKAction() {
         try{
             addClasses();
-            ClassInputs.INSTANCE.generateClass();
+
+            Singleton singletonClass = new Singleton(ClassInputs.INSTANCE.getClassesToGenerate().get(0), ClassInputs.INSTANCE.getPatternToGenerate(), ClassInputs.INSTANCE.getPackageName(), ClassInputs.INSTANCE.getFields(), ClassInputs.INSTANCE.getMethods());
+            ClassInputs.INSTANCE.addClassGen(singletonClass.getClassGen());
             ClassInputs.INSTANCE.getFieldsToAddComps().clear();
             ClassInputs.INSTANCE.getMethodsToAddComps().clear();
             super.doOKAction();

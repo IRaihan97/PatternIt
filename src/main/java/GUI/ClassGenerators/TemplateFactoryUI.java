@@ -69,7 +69,6 @@ public class TemplateFactoryUI extends DialogWrapper {
     protected void doOKAction() {
         try{
             addClasses();
-            ClassInputs.INSTANCE.generateClass();
             ClassInputs.INSTANCE.getFieldsToAddComps().clear();
             ClassInputs.INSTANCE.getMethodsToAddComps().clear();
             super.doOKAction();

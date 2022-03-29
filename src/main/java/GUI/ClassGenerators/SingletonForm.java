@@ -13,9 +13,6 @@ import java.awt.event.ActionListener;
 
 @Data
 public class SingletonForm {
-//    private JTextField classNameInput;
-//    private JComboBox fieldDataTypeBox;
-//    private JTextField fieldNameInput;
     private JPanel mainPanel;
     private JPanel classDefinerPanel;
     private JLabel singletonLb;
@@ -59,28 +56,6 @@ public class SingletonForm {
             }
         });
 
-//        singletonName.setInputVerifier(inputVerifier);
-//        packageName.setInputVerifier(inputVerifier);
-
-//        singletonName.getDocument().addDocumentListener(new DocumentListener() {
-//            @Override
-//            public void insertUpdate(DocumentEvent e) {
-//                ClassInputs.INSTANCE.addClassName(singletonName.getText());
-//
-//            }
-//
-//            @Override
-//            public void removeUpdate(DocumentEvent e) {
-//                ClassInputs.INSTANCE.addClassName(singletonName.getText());
-//            }
-//
-//            @Override
-//            public void changedUpdate(DocumentEvent e) {
-//                ClassInputs.INSTANCE.addClassName(singletonName.getText());
-//                System.out.println(singletonName.getText());
-//            }
-//        });
-
         packageName.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -104,14 +79,6 @@ public class SingletonForm {
         if(!inputVerifier.verify(packageName))return false;
         return true;
     }
-    private void addFieldRow(){
-
-
-    }
-
-    private void generateMethodRow(){
-    }
-
 
     public JComponent getContent() {
         return mainPanel;
