@@ -80,7 +80,7 @@ The class attribute is also very important, it determines which java class will 
 Define components that may be required for your patterns, eg Abstract Classes, Interface, Classes etc. <br>
 ### Step 2.2
 Create a new Package under JavaPoetTemplate.Patterns with a relevant Pattern Name, such as "FactoryMethod" or "MVC"
-###Step 2.3
+### Step 2.3
 Start defining a class in the newly defined package
 Below is an extract of the possible constructor that you might require
 ```java
