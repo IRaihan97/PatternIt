@@ -21,5 +21,15 @@
       <option name="name" value="maven" />
       <option name="url" value="https://repos.lobosstudios.com/repository/java-dev/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="https://mvnrepository.com/artifact/org.assertj/assertj-core" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="https://mvnrepository.com/artifact/org.assertj/assertj-swing-junit" />
+    </remote-repository>
   </component>
 </project>

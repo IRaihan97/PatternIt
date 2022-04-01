@@ -1,6 +1,7 @@
 package GUI.ClassGenerators;
 
 import InputHolders.ClassInputs;
+import InputHolders.TextFieldVerifier;
 import lombok.Data;
 
 import javax.swing.*;
@@ -33,10 +34,19 @@ public class CompositeForm {
     private GridBagConstraints conComp = new GridBagConstraints();
     private ArrayList<JComponent[]> compositeComponents = new ArrayList<>();
     private ArrayList<JComponent[]> leafComponents = new ArrayList<>();
+    private TextFieldVerifier inputVerifier = new TextFieldVerifier();
 
 
 
     CompositeForm(){
+        SwingUtilities.invokeLater( new Runnable() {
+
+            public void run() {
+                interfaceLb.requestFocus();
+                interfaceNameIn.setInputVerifier(inputVerifier);
+                packageNameIn.setInputVerifier(inputVerifier);
+            }
+        } );
         conLeaf.gridy = 0;
         conComp.gridy = 0;
         //mainPanel.setPreferredSize(new Dimension(700, 1000));
@@ -69,6 +79,7 @@ public class CompositeForm {
         addAbstractMethodsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!validateFields())return;
                 Methods dialog = new Methods(interfaceNameIn.getText(), true);
                 dialog.pack();
                 dialog.setLocationRelativeTo(null);
@@ -79,6 +90,7 @@ public class CompositeForm {
         addLeafBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!validateFields())return;
                 addJComponents("Leaf");
                 addObjectRow(leafDefinerPanel, conLeaf, "Leaf");
                 panelSizeIncrease(leafDefinerPanel);
@@ -88,11 +100,13 @@ public class CompositeForm {
         addCompositeBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!validateFields())return;
                 addJComponents("Composite");
                 addObjectRow(compositeDefinerPanel, conComp, "Composite");
                 panelSizeIncrease(compositeDefinerPanel);
             }
         });
+
 
 
 
@@ -117,6 +131,7 @@ public class CompositeForm {
         JComponent[] components = new JComponent[4];
         JLabel label = new JLabel(labelText + " Name:");
         JTextField classNameInput = new JTextField();
+        classNameInput.setInputVerifier(inputVerifier);
         JButton addField = new JButton("Add Fields");
         JButton addMethod = new JButton("Add Methods");
         addField.addActionListener(new ActionListener() {
@@ -132,6 +147,7 @@ public class CompositeForm {
         addMethod.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 Methods dialog = new Methods(classNameInput.getText(), false);
                 dialog.pack();
                 dialog.setLocationRelativeTo(null);
@@ -172,7 +188,15 @@ public class CompositeForm {
         con.gridy++;
     }
 
+    private boolean validateFields(){
+        if(!inputVerifier.verify(interfaceNameIn))return false;
+        if(!inputVerifier.verify(packageNameIn))return false;
+        return true;
+    }
+
+
     public JComponent getContent(){
         return mainPanel;
     }
+
 }

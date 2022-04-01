@@ -67,8 +67,16 @@ public class TemplateFactoryUI extends DialogWrapper {
 
     @Override
     protected void doOKAction() {
-        addClasses();
-        super.doOKAction();
+        try{
+            addClasses();
+            ClassInputs.INSTANCE.getFieldsToAddComps().clear();
+            ClassInputs.INSTANCE.getMethodsToAddComps().clear();
+            super.doOKAction();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(templateForm.getInterfaceNameIn(), e.getMessage()+ "Invalid name, Please choose a different name","Error Dialog",
+                    JOptionPane.ERROR_MESSAGE );
+            ClassInputs.INSTANCE.clearAll();
+        }
     }
 
     @Nullable

@@ -17,7 +17,6 @@ public class AbstractTemplate {
     private ClassName componentType;
     private TypeSpec absClassGen;
 
-    public AbstractTemplate(){};
 
     public AbstractTemplate(String absClassName, String packageName, ArrayList<FieldGen> fieldGenToAdd, ArrayList<MethodGen> methodGenToAdd) {
         this.absClassName = absClassName;
@@ -57,9 +56,9 @@ public class AbstractTemplate {
         return componentType;
     }
 
-    public ArrayList<FieldGen> getFieldsToAdd() {
-        return fieldGenToAdd;
-    }
+//    public ArrayList<FieldGen> getFieldsToAdd() {
+//        return fieldGenToAdd;
+//    }
 
     public ArrayList<MethodGen> getMethodsToAdd() {
         return methodGenToAdd;

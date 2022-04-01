@@ -1,10 +1,11 @@
 package JavaPoetTemplates.Patterns.Composite;
 
 import com.squareup.javapoet.*;
+import lombok.Data;
 
 import javax.lang.model.element.Modifier;
 import java.util.Locale;
-
+@Data
 public class Composite{
     private String componentInterface;
     private Component componentClass;
@@ -12,7 +13,6 @@ public class Composite{
     private ClassName componentType;
     private TypeSpec compositeGen;
 
-    public Composite(){};
 
     public Composite(Component component, String compositeObjName, String packageName) {
         this.componentInterface = component.getComponentName();

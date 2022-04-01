@@ -80,8 +80,16 @@ public class CompositeFactoryUI extends DialogWrapper {
 
     @Override
     protected void doOKAction() {
-        addClasses();
-        super.doOKAction();
+        try{
+            addClasses();
+            ClassInputs.INSTANCE.getFieldsToAddComps().clear();
+            ClassInputs.INSTANCE.getMethodsToAddComps().clear();
+            super.doOKAction();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(compositeForm.getContent(), "Invalid name, Please choose a different name","Error Dialog",
+                    JOptionPane.ERROR_MESSAGE );
+            ClassInputs.INSTANCE.clearAll();
+        }
     }
 
     @Nullable

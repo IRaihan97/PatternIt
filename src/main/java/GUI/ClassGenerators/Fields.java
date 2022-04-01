@@ -1,8 +1,10 @@
 package GUI.ClassGenerators;
 
 import InputHolders.ClassInputs;
+import InputHolders.TextFieldVerifier;
 import JavaPoetTemplates.FieldGen;
 import com.intellij.openapi.ui.ComboBox;
+import com.siyeh.ig.packaging.ExceptionPackageInspection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +26,7 @@ public class Fields extends JDialog {
     private int panelIndex = 0;
     GridBagConstraints con = new GridBagConstraints();
     private String className;
+    private TextFieldVerifier inputVerifier = new TextFieldVerifier();
 
     public Fields(String className) {
         this.className = className;
@@ -91,20 +94,28 @@ public class Fields extends JDialog {
     private void onOK() {
         // add your code here
         //ClassInputs.INSTANCE.getField().clear();
-        for(int i =0; i < componentsToAdd.size(); i++){
-            JComponent[] components = componentsToAdd.get(i);
-            ArrayList<javax.lang.model.element.Modifier> modifiers = new ArrayList<>();
-            JTextField fieldInput = (JTextField) components[1];
-            modifiers.add(modDropDown((ComboBox) components[2]));
-            modifiers.add(modDropDown((ComboBox) components[3]));
-            Class type = typeDropDown((ComboBox) components[4]);
-            FieldGen field = new FieldGen(type, fieldInput.getText(), modifiers, className);
-            ClassInputs.INSTANCE.addFields(field);
-            ClassInputs.INSTANCE.setFieldsToAddComps(componentsToAdd);
-            panelIndex=0;
-            con.gridy=1;
+        try{
+            for(int i =0; i < componentsToAdd.size(); i++){
+                JComponent[] components = componentsToAdd.get(i);
+                ArrayList<javax.lang.model.element.Modifier> modifiers = new ArrayList<>();
+                JTextField fieldInput = (JTextField) components[1];
+                modifiers.add(modDropDown((ComboBox) components[2]));
+                modifiers.add(modDropDown((ComboBox) components[3]));
+                Class type = typeDropDown((ComboBox) components[4]);
+                FieldGen field = new FieldGen(type, fieldInput.getText(), modifiers, className);
+                ClassInputs.INSTANCE.addFields(field);
+                ClassInputs.INSTANCE.setFieldsToAddComps(componentsToAdd);
+                panelIndex=0;
+                con.gridy=1;
+            }
+            dispose();
         }
-        dispose();
+        catch(Exception e){
+            JOptionPane.showMessageDialog(contentPane, "Invalid name, names cannot be blank or contain special characters","Error Dialog",
+                    JOptionPane.ERROR_MESSAGE );
+        }
+
+
     }
 
     private void onCancel() {
@@ -167,6 +178,7 @@ public class Fields extends JDialog {
         JComponent[] component = new JComponent[5];
         JLabel fieldName = new JLabel("Field Name");
         JTextField fieldNameInput = new JTextField();
+        fieldNameInput.setInputVerifier(inputVerifier);
         fieldNameInput.setSize(new Dimension(200, 10));
         ComboBox encBox = new ComboBox();
         createEncapsulationBox(encBox);
